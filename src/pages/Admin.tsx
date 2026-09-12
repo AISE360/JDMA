@@ -498,24 +498,46 @@ export default function Admin() {
 
   if (!authed) {
     return (
-      <div className="min-h-screen bg-paper flex items-center justify-center px-6">
-        <div className="w-full max-w-sm text-center">
-          <img src="/assets/jpma-logo-blue.png" alt="JPMA" className="h-11 w-auto mx-auto" />
-          <h1 className="font-display mt-5 text-4xl">Admin login.</h1>
-          <p className="mt-2 text-[13.5px] text-soft">
-            {isSupabaseConfigured ? 'Sign in with your staff account.' : 'Local demo mode, no password needed.'}
-          </p>
-          {isSupabaseConfigured ? (
-            <form onSubmit={login} className="mt-6 space-y-3 rounded-[1.5rem] border border-ink/10 bg-white p-6">
-              <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Staff email" type="email" className="w-full rounded-xl border border-ink/15 px-4 py-3 text-sm outline-none" />
-              <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" type="password" className="w-full rounded-xl border border-ink/15 px-4 py-3 text-sm outline-none" />
-              {authMsg && <p className="text-[13px] text-red-700">{authMsg}</p>}
-              <button className="w-full rounded-full bg-brand py-3 text-[11px] font-bold uppercase tracking-[0.2em] text-white">Sign in</button>
-            </form>
-          ) : (
-            <button onClick={() => setAuthed(true)} className="mt-6 w-full rounded-full bg-brand py-3.5 text-[11px] font-bold uppercase tracking-[0.2em] text-white">Enter admin</button>
-          )}
-          <Link to="/" className="mt-4 inline-block text-[12.5px] text-soft hover:text-brand">← Back to website</Link>
+      <div className="min-h-screen bg-paper flex items-center justify-center px-4 py-10 relative overflow-hidden">
+        <span aria-hidden className="giant-mark absolute -right-10 -top-16 text-[18rem]">J</span>
+        <span aria-hidden className="giant-mark absolute -left-12 -bottom-20 text-[16rem]">P</span>
+        <div className="relative w-full max-w-4xl overflow-hidden rounded-[2rem] bg-white shadow-[0_40px_90px_-40px_rgba(38,49,62,0.5)] border border-ink/10 grid md:grid-cols-2">
+          <div className="bg-brand-deep text-white p-8 md:p-10 flex flex-col justify-between min-h-[280px]">
+            <div>
+              <img src="/assets/jpma-logo-blue.png" alt="JPMA" className="h-10 w-auto bg-white rounded-lg px-2.5 py-1" />
+              <p className="mt-6 text-[10.5px] font-bold uppercase tracking-[0.28em] text-white/50">JPMA command center</p>
+              <h1 className="font-display mt-3 text-4xl leading-tight">Every lead,<br />every pixel,<br />manageable.</h1>
+            </div>
+            <ul className="mt-8 space-y-2.5 text-[13px] text-white/70">
+              <li className="flex gap-2.5"><span className="text-white">◆</span> Brochure, enquiry & job leads with phone numbers</li>
+              <li className="flex gap-2.5"><span className="text-white">◆</span> All website text, images, projects & news</li>
+              <li className="flex gap-2.5"><span className="text-white">◆</span> One-click CSV exports for the team</li>
+            </ul>
+          </div>
+          <div className="p-8 md:p-10 flex flex-col justify-center">
+            <p className="text-[10.5px] font-bold uppercase tracking-[0.28em] text-brand">Staff sign in</p>
+            <h2 className="font-display mt-2 text-3xl">Welcome back.</h2>
+            <p className="mt-2 text-[13.5px] text-soft">
+              {isSupabaseConfigured ? 'Sign in with your staff ID to open the admin.' : 'Local demo mode, no password needed.'}
+            </p>
+            {isSupabaseConfigured ? (
+              <form onSubmit={login} className="mt-6 space-y-3">
+                <div>
+                  <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.18em] text-soft">Admin ID</label>
+                  <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@jpma.org.in" type="email" className="w-full rounded-xl border border-ink/15 bg-paper px-4 py-3 text-sm outline-none placeholder:text-ink/35 focus:border-brand" />
+                </div>
+                <div>
+                  <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.18em] text-soft">Password</label>
+                  <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" type="password" className="w-full rounded-xl border border-ink/15 bg-paper px-4 py-3 text-sm outline-none placeholder:text-ink/35 focus:border-brand" />
+                </div>
+                {authMsg && <p className="rounded-xl bg-red-50 px-4 py-2.5 text-[13px] font-medium text-red-700">{authMsg}</p>}
+                <button className="w-full rounded-full bg-brand py-3.5 text-[11px] font-bold uppercase tracking-[0.2em] text-white hover:bg-brand-deep transition-colors">Sign in →</button>
+              </form>
+            ) : (
+              <button onClick={() => setAuthed(true)} className="mt-6 w-full rounded-full bg-brand py-3.5 text-[11px] font-bold uppercase tracking-[0.2em] text-white hover:bg-brand-deep transition-colors">Enter admin →</button>
+            )}
+            <Link to="/" className="mt-5 text-center text-[12.5px] text-soft hover:text-brand">← Back to website</Link>
+          </div>
         </div>
       </div>
     )
