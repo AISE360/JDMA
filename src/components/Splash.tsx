@@ -110,7 +110,15 @@ function dropM(delay: number, dur: number, dist: number, go: boolean) {
 }
 
 function StackLockup({ go, onMissing }: { go: boolean; onMissing: () => void }) {
-  // Mobile: big JP mark only, centered. No text, no stacking.
+  // Mobile: big JP mark only, centered. The drop runs on a wrapper so the
+  // image itself carries no transforms and can never be clipped or distorted.
+  const dropWrap = !go
+    ? { initial: { y: OFF, opacity: 0 } as const, animate: { y: OFF, opacity: 0 } as const, transition: { duration: 0 } }
+    : {
+        initial: { y: OFF, opacity: 1 },
+        animate: { y: [OFF, 10, -4, 0] },
+        transition: { duration: 0.6, delay: 0, times: [0, 0.62, 0.84, 1], ease: 'easeOut' as const },
+      }
   return (
     <motion.div
       className="relative flex md:hidden justify-center"
@@ -118,10 +126,21 @@ function StackLockup({ go, onMissing }: { go: boolean; onMissing: () => void }) 
       animate={go ? { scale: [1, 1.02, 1] } : { scale: 1 }}
       transition={{ duration: 0.2, delay: 1.7, times: [0, 0.5, 1], ease: 'easeInOut' }}
     >
-      <div className="relative overflow-hidden rounded-xl px-4 py-3">
-        <motion.img src={PARTS[0]} alt="JP" width={DIMS.logo.w} height={DIMS.logo.h} onError={onMissing} draggable={false}
-          className="h-[min(52vw,200px)] w-auto" {...dropM(0, 0.6, OFF, go)} />
-        {go && <Shine delay={1.9} />}
+      <div style={{ display: 'inline-block', overflow: 'visible', lineHeight: 0 }}>
+        <motion.div {...dropWrap} style={{ display: 'inline-block', overflow: 'visible', lineHeight: 0 }}>
+          <span style={{ position: 'relative', display: 'inline-block', overflow: 'hidden', lineHeight: 0 }}>
+            <img
+              src={PARTS[0]}
+              alt="JP"
+              width={DIMS.logo.w}
+              height={DIMS.logo.h}
+              onError={onMissing}
+              draggable={false}
+              style={{ display: 'block', width: 'min(52vw, 200px)', height: 'auto', maxWidth: '52vw' }}
+            />
+            {go && <Shine delay={1.9} />}
+          </span>
+        </motion.div>
       </div>
     </motion.div>
   )
