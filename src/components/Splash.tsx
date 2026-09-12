@@ -110,30 +110,18 @@ function dropM(delay: number, dur: number, dist: number, go: boolean) {
 }
 
 function StackLockup({ go, onMissing }: { go: boolean; onMissing: () => void }) {
-  // Mobile: the SAME single horizontal line, scaled to min(90vw, 360px).
-  // Pieces drop independently but all land in final horizontal positions.
+  // Mobile: big JP mark only, centered. No text, no stacking.
   return (
     <motion.div
       className="relative flex md:hidden justify-center"
       initial={{ scale: 1 }}
       animate={go ? { scale: [1, 1.02, 1] } : { scale: 1 }}
-      transition={{ duration: 0.2, delay: 1.45, times: [0, 0.5, 1], ease: 'easeInOut' }}
+      transition={{ duration: 0.2, delay: 1.7, times: [0, 0.5, 1], ease: 'easeInOut' }}
     >
-      <div className="relative overflow-hidden rounded-lg px-1 py-2 w-[min(90vw,360px)]">
-        <div
-          className="flex items-center justify-center gap-2 w-full"
-          style={{ height: 'calc(min(90vw, 360px) * 40 / 1006)' }}
-        >
-          <motion.img src={PARTS[0]} alt="JP" width={DIMS.logo.w} height={DIMS.logo.h} onError={onMissing} draggable={false}
-            className="h-full w-auto shrink-0" {...dropM(0, 0.55, OFF, go)} />
-          <motion.img src={PARTS[1]} alt="J.P. Mukherji" width={DIMS.mu.w} height={DIMS.mu.h} onError={onMissing} draggable={false}
-            className="h-full w-auto shrink-0" {...dropM(0.25, 0.55, OFF * 0.85, go)} />
-          <motion.img src={PARTS[2]} alt="& Associates" width={DIMS.as.w} height={DIMS.as.h} onError={onMissing} draggable={false}
-            className="h-full w-auto shrink-0" {...dropM(0.55, 0.55, OFF * 0.7, go)} />
-          <motion.img src={PARTS[3]} alt="Pvt. Ltd." width={DIMS.pv.w} height={DIMS.pv.h} onError={onMissing} draggable={false}
-            className="h-full w-auto shrink-0" {...dropM(0.9, 0.55, OFF * 0.6, go)} />
-        </div>
-        {go && <Shine delay={1.5} />}
+      <div className="relative overflow-hidden rounded-xl px-4 py-3">
+        <motion.img src={PARTS[0]} alt="JP" width={DIMS.logo.w} height={DIMS.logo.h} onError={onMissing} draggable={false}
+          className="h-[min(52vw,200px)] w-auto" {...dropM(0, 0.6, OFF, go)} />
+        {go && <Shine delay={1.9} />}
       </div>
     </motion.div>
   )
