@@ -209,7 +209,7 @@ const lsKey = (k: string) => `jpma_cms_${k}`
 
 // One-way migrations for browsers seeded by older defaults. Additive only,
 // never deletes user content.
-const MIGRATION_VERSION = 3
+const MIGRATION_VERSION = 4
 function migrateOnce() {
   try {
     const cur = Number(localStorage.getItem('jpma_cms_version') || 1)
@@ -248,6 +248,19 @@ function migrateOnce() {
             image: '/assets/slider-six.jpg', cta: 'See projects', href: '/projects',
           })
           localStorage.setItem(lsKey('heroSlides'), JSON.stringify(heroes))
+        }
+      }
+    }
+    if (cur < 4) {
+      // product family grew from 10 to the full 14: reseed only untouched defaults
+      const rawProd = localStorage.getItem(lsKey('products'))
+      if (rawProd) {
+        const prods = JSON.parse(rawProd) as Item[]
+        const ids = prods.map((p) => p.id).sort()
+        const legacy = Array.from({ length: 10 }, (_, i) => `product-${i + 1}`).sort()
+        if (JSON.stringify(ids) === JSON.stringify(legacy)) {
+          localStorage.removeItem(lsKey('products'))
+          getCollection('products')
         }
       }
     }
