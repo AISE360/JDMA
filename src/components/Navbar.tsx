@@ -53,9 +53,9 @@ export default function Navbar({ onBrochure }: { onBrochure: OpenBrochure }) {
   return (
     <>
       <header className={`sticky top-0 z-40 bg-white border-b border-navy/10 will-change-transform transition-transform duration-300 ${hidden && !open ? '-translate-y-full' : 'translate-y-0'}`}>
-        <div className="w-full pl-3 pr-3 md:pl-6 md:pr-5 flex items-center gap-5 h-[68px]">
-          <Link to="/" aria-label="JPMA home" className="shrink-0">
-            <img src="/assets/jpma-logo-blue.png" alt="J.P. Mukherji & Associates" className="h-10 md:h-11 w-auto object-contain" />
+        <div className="w-full pl-3 pr-3 md:pl-6 md:pr-5 flex items-center gap-3 md:gap-5 h-[60px] md:h-[68px] min-w-0">
+          <Link to="/" aria-label="JPMA home" className="shrink-0 min-w-0">
+            <img src="/assets/jpma-logo-blue.png" alt="J.P. Mukherji & Associates" className="h-7 sm:h-8 md:h-9 w-auto max-w-[170px] sm:max-w-[220px] md:max-w-[300px] object-contain" />
           </Link>
 
           <nav className="hidden xl:flex items-center gap-[26px] mx-auto">
@@ -83,7 +83,7 @@ export default function Navbar({ onBrochure }: { onBrochure: OpenBrochure }) {
               Contact <span aria-hidden>→</span>
             </Link>
             <span className="hidden xl:block text-right font-mono text-[8.5px] uppercase leading-[1.7] tracking-[0.14em] text-ink/45 pl-2">Est. 1972<br />Kolkata, India</span>
-            <button onClick={() => setOpen(true)} className="xl:hidden cut-btn inline-flex items-center gap-2 bg-navy px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-white">
+            <button onClick={() => setOpen(true)} className="xl:hidden cut-btn inline-flex shrink-0 items-center gap-2 bg-navy px-3.5 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-white">
               Menu ≡
             </button>
           </div>
@@ -92,9 +92,9 @@ export default function Navbar({ onBrochure }: { onBrochure: OpenBrochure }) {
       <AnimatePresence>
         {open && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.22 }} className="fixed inset-0 z-[90] bg-navydeep blueprint-dark flex flex-col" role="dialog" aria-label="Site menu">
-            <div className="w-full pl-3 pr-3 flex items-center justify-between h-[68px] bg-white border-b border-navy/10 shrink-0">
-              <img src="/assets/jpma-logo-blue.png" alt="J.P. Mukherji & Associates" className="h-10 w-auto object-contain" />
-              <button onClick={() => setOpen(false)} aria-label="Close menu" className="cut-btn inline-flex items-center gap-2 bg-navy px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-white">Close ×</button>
+            <div className="w-full pl-3 pr-3 flex items-center justify-between gap-3 h-[60px] bg-white border-b border-navy/10 shrink-0 min-w-0">
+              <img src="/assets/jpma-logo-blue.png" alt="J.P. Mukherji & Associates" className="h-7 w-auto max-w-[170px] object-contain min-w-0" />
+              <button onClick={() => setOpen(false)} aria-label="Close menu" className="cut-btn inline-flex shrink-0 items-center gap-2 bg-navy px-3.5 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-white">Close ×</button>
             </div>
             <nav className="flex-1 overflow-y-auto px-5 md:px-8 py-6">
               {MENU.map((m, mi) => (

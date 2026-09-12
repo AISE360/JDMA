@@ -29,9 +29,6 @@ html.lenis, html.lenis body { height: auto; }
 html, body { width: 100%; max-width: 100%; overflow-x: clip; }
 @supports not (overflow: clip) { html, body { overflow-x: hidden; } }
 img { max-width: 100%; }
-@media (max-width: 767.98px) {
-  .px-6 { padding-left: 20px; padding-right: 20px; }
-}
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee, .animate-marquee-slow { animation: none; }
   .lift, .lift:hover { transform: none; box-shadow: none; }
@@ -50,9 +47,11 @@ body {
   font-family: var(--font-display);
   text-transform: uppercase;
   letter-spacing: 0.005em;
-  line-height: 0.94;
+  line-height: 1.0;
   font-weight: 600;
   text-wrap: balance;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 ::selection { background: #1b4acb; color: #fff; }
@@ -118,7 +117,7 @@ body {
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 /* site-wide: industrial headings + readable legacy cards */
-main h1, main h2 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.01em; line-height: 0.92; overflow-wrap: anywhere; word-break: normal; max-width: 100%; }
+main h1, main h2 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.01em; line-height: 1.02; overflow-wrap: break-word; word-break: normal; hyphens: none; max-width: 100%; }
 main .bg-white { color: #0b1a33; }
 
 /* responsive stability: no layout shift across screen sizes */

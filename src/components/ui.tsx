@@ -57,7 +57,7 @@ export function SectionHead({ kicker, title, copy, center = false }: { kicker: s
   return (
     <Reveal className={center ? 'mx-auto max-w-2xl text-center' : 'max-w-2xl'}>
       <Kicker center={center}>{kicker}</Kicker>
-      <h2 className="font-display mt-3 text-4xl md:text-[3rem] leading-[0.95] text-current">
+      <h2 className="font-display mt-3 text-[1.7rem] sm:text-4xl md:text-[3rem] leading-[1.05] md:leading-[0.95] text-current break-words">
         {title}
       </h2>
       {copy && <p className="mt-4 font-mono text-[12px] uppercase tracking-[0.04em] leading-relaxed opacity-70">{copy}</p>}

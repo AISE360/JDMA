@@ -501,7 +501,7 @@ export default function Admin() {
         <div className="relative w-full max-w-4xl overflow-hidden rounded-[2rem] bg-white shadow-[0_40px_90px_-40px_rgba(38,49,62,0.5)] border border-ink/10 grid md:grid-cols-2">
           <div className="bg-brand-deep text-white p-8 md:p-10 flex flex-col justify-between min-h-[280px]">
             <div>
-              <img src="/assets/jpma-logo-blue.png" alt="JPMA" className="h-10 w-auto bg-white rounded-lg px-2.5 py-1" />
+              <img src="/assets/jpma-logo-blue.png" alt="JPMA" className="h-8 w-auto max-w-[200px] bg-white rounded-lg px-2.5 py-1" />
               <p className="mt-6 text-[10.5px] font-bold uppercase tracking-[0.28em] text-white/50">JPMA command center</p>
               <h1 className="font-display mt-3 text-4xl leading-tight">Every lead,<br />every pixel,<br />manageable.</h1>
             </div>

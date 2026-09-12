@@ -156,7 +156,7 @@ function FallbackLockup({ go }: { go: boolean }) {
     >
       <div className="relative overflow-hidden rounded-xl px-6 py-4">
         <motion.img src="/assets/jpma-logo-blue.png" alt="J. P. Mukherji & Associates" draggable={false}
-          className="h-16 md:h-20 w-auto" {...drop(0, 0.7, OFF, go)} />
+          className="h-12 sm:h-14 md:h-16 w-auto max-w-[70vw]" {...drop(0, 0.7, OFF, go)} />
         {go && <Shine delay={1.9} />}
       </div>
     </motion.div>

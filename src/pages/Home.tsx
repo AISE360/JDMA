@@ -32,11 +32,11 @@ function ClientsWall() {
 
 function StatItem({ icon, value, label }: { icon: React.ReactNode; value: string; label: string }) {
   return (
-    <div className="flex items-center gap-4 px-5 md:px-9 py-[20px] md:py-[22px] border-b xl:border-b-0 xl:border-r border-navy/10 last:border-0 min-w-0 overflow-hidden">
-      <span className="flex h-11 w-11 shrink-0 items-center justify-center bg-[#0e2a5e] text-white">{icon}</span>
+    <div className="flex items-center gap-3.5 px-5 md:px-9 py-4 md:py-[22px] border-b xl:border-b-0 xl:border-r border-navy/10 last:border-0 min-w-0 overflow-hidden">
+      <span className="flex h-9 w-9 md:h-11 md:w-11 shrink-0 items-center justify-center bg-[#0e2a5e] text-white">{icon}</span>
       <span className="min-w-0">
-        <span className="block font-display text-[28px] md:text-[38px] font-semibold text-ink leading-none break-words">{value}</span>
-        <span className="mt-[5px] block font-mono text-[9.5px] uppercase tracking-[0.18em] text-soft leading-snug">{label}</span>
+        <span className="block font-display text-[24px] md:text-[38px] font-semibold text-ink leading-none whitespace-nowrap">{value}</span>
+        <span className="mt-[5px] block font-mono text-[9px] md:text-[9.5px] uppercase tracking-[0.16em] md:tracking-[0.18em] text-soft leading-snug">{label}</span>
       </span>
     </div>
   )
@@ -44,7 +44,7 @@ function StatItem({ icon, value, label }: { icon: React.ReactNode; value: string
 
 function ServiceImageCard({ img, title, to }: { img: string; title: string; to: string }) {
   return (
-    <Link to={to} className="cut-card group relative block w-full min-w-0 overflow-hidden bg-navydeep h-[280px] sm:h-[300px] xl:h-[320px] 2xl:h-[330px]">
+    <Link to={to} className="cut-card group relative block w-full min-w-0 overflow-hidden bg-navydeep h-[240px] sm:h-[300px] xl:h-[320px] 2xl:h-[330px]">
       <img src={img} alt={title} className="absolute inset-0 h-full w-full object-cover img-industrial opacity-90 group-hover:scale-105 transition-transform duration-700" />
       <span className="absolute inset-0 bg-gradient-to-t from-[#081a3a] via-[#081a3a]/30 to-transparent" />
       <span className="absolute inset-x-0 bottom-0 p-6">
@@ -64,24 +64,24 @@ export default function Home({ onBrochure }: { onBrochure: OpenBrochure }) {
       <section className="w-full overflow-hidden">
         <div className="grid w-full grid-cols-1 lg:grid-cols-[minmax(0,30%)_minmax(0,1fr)_minmax(0,26%)] xl:grid-cols-[minmax(0,27%)_minmax(0,1fr)_minmax(0,21%)] lg:min-h-[560px] xl:min-h-[600px] 2xl:min-h-[640px] border-b border-navy/10">
           {/* left copy */}
-          <div className="blueprint relative px-6 md:px-8 xl:px-10 pt-8 md:pt-9 pb-7 flex flex-col bg-white min-w-0 overflow-hidden">
-            <p className="flex min-w-0 items-center gap-3 md:gap-4 font-mono text-[8.5px] md:text-[9.5px] uppercase tracking-[0.18em] md:tracking-[0.24em] text-soft">
-              <span className="h-px w-8 md:w-10 shrink-0 bg-navy/25" />
-              <span className="min-w-0 truncate">Engineering&nbsp;&nbsp;&nbsp;People&nbsp;&nbsp;&nbsp;Progress</span>
-              <span className="h-px flex-1 bg-navy/10" />
+          <div className="blueprint relative px-5 sm:px-6 md:px-8 xl:px-10 pt-7 md:pt-9 pb-6 md:pb-7 flex flex-col bg-white min-w-0 overflow-hidden">
+            <p className="flex min-w-0 items-center gap-3 font-mono text-[8px] sm:text-[9px] md:text-[9.5px] uppercase tracking-[0.14em] sm:tracking-[0.2em] md:tracking-[0.24em] text-soft">
+              <span className="h-px w-6 sm:w-8 md:w-10 shrink-0 bg-navy/25" />
+              <span className="min-w-0 whitespace-nowrap">Engineering&nbsp;&nbsp;&nbsp;People&nbsp;&nbsp;&nbsp;Progress</span>
+              <span className="h-px w-6 flex-1 bg-navy/10" />
             </p>
-            <h1 className="mt-6 md:mt-7 font-display font-semibold text-[clamp(2rem,1.35rem+2.6vw,4.3rem)] leading-[0.98] break-words [overflow-wrap:anywhere]">
+            <h1 className="mt-5 md:mt-7 font-display font-semibold text-[1.85rem] sm:text-[2.4rem] lg:text-[clamp(2.2rem,1.35rem+2.6vw,4.3rem)] leading-[1.02] break-words">
               <span className="block text-[#101418]">Building with precision.</span>
               <span className="block text-brand">Delivering with confidence.</span>
             </h1>
-            <p className="mt-6 max-w-[44ch] font-mono text-[11px] leading-[1.75] text-soft">
+            <p className="mt-5 max-w-[44ch] font-mono text-[11px] leading-[1.75] text-soft">
               From sugar plants to large-scale cogeneration, J.P. Mukherji & Associates brings expertise, accountability and execution to every project.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <button onClick={() => onBrochure()} className="cut-btn bg-brand pl-7 pr-8 py-[13px] font-mono text-[10.5px] font-bold uppercase tracking-[0.12em] text-white hover:bg-navy">
+            <div className="mt-6 md:mt-8 grid grid-cols-1 min-[420px]:flex min-[420px]:flex-wrap gap-2.5 min-[420px]:gap-3">
+              <button onClick={() => onBrochure()} className="cut-btn bg-brand px-6 py-[13px] text-center font-mono text-[10.5px] font-bold uppercase tracking-[0.12em] text-white hover:bg-navy min-[420px]:pl-7 min-[420px]:pr-8">
                 Our brochure&nbsp;&nbsp;→
               </button>
-              <Link to="/contact" className="cut-btn border border-navy/45 pl-7 pr-8 py-[12px] font-mono text-[10.5px] font-bold uppercase tracking-[0.12em] text-navy hover:bg-navy hover:text-white">
+              <Link to="/contact" className="cut-btn border border-navy/45 px-6 py-[12px] text-center font-mono text-[10.5px] font-bold uppercase tracking-[0.12em] text-navy hover:bg-navy hover:text-white min-[420px]:pl-7 min-[420px]:pr-8">
                 Contact us&nbsp;&nbsp;→
               </Link>
             </div>
@@ -92,7 +92,7 @@ export default function Home({ onBrochure }: { onBrochure: OpenBrochure }) {
           </div>
 
           {/* center image */}
-          <div className="relative min-h-[280px] sm:min-h-[340px] lg:min-h-[560px] xl:min-h-[600px] min-w-0 overflow-hidden">
+          <div className="relative min-h-[240px] sm:min-h-[340px] lg:min-h-[560px] xl:min-h-[600px] min-w-0 overflow-hidden border-y lg:border-y-0 border-navy/10">
             <img src={HERO_IMG} alt="Sugar and cogeneration plant" className="absolute inset-0 h-full w-full object-cover" />
             <div className="absolute inset-0 blueprint" />
             {/* crosshair survey mark */}
@@ -165,7 +165,7 @@ export default function Home({ onBrochure }: { onBrochure: OpenBrochure }) {
         <p className="flex items-center justify-center gap-4 px-4 font-mono text-[9.5px] uppercase tracking-[0.24em] text-soft">
           <span className="h-px w-10 bg-navy/30" /> Trusted by mills across India and 30+ countries <span className="h-px w-10 bg-navy/30" />
         </p>
-        <h2 className="mt-3 px-4 text-center font-display font-semibold text-[clamp(1.5rem,2.6vw,2.3rem)] text-[#101418]">
+        <h2 className="mt-3 px-4 text-center font-display font-semibold text-[1.5rem] sm:text-[1.75rem] md:text-[clamp(1.5rem,2.6vw,2.3rem)] leading-[1.05] text-[#101418]">
           Our <span className="text-brand">clients</span> & partners
         </h2>
         <div className="mt-8">

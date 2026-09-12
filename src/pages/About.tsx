@@ -27,11 +27,11 @@ function ValueBadge({ label, i }: { label: string; i: number }) {
 export function PageHero({ eyebrow, title, copy }: { eyebrow: string; title: string; copy?: string; image?: string }) {
   return (
     <section className="relative overflow-hidden border-b border-ink/10">      <span aria-hidden className="giant-mark absolute -left-6 -top-10 text-[12rem]">&</span>
-      <div className="relative mx-auto max-w-3xl px-6 py-16 md:py-20 text-center">
+      <div className="relative mx-auto max-w-3xl px-5 sm:px-6 py-12 md:py-20 text-center min-w-0">
         <Reveal>
           <Kicker center>{eyebrow}</Kicker>
-          <h1 className="font-display mt-3 text-4xl md:text-5xl leading-[1.1] font-medium">{title}</h1>
-          {copy && <p className="mt-4 text-[14.5px] leading-relaxed text-soft">{copy}</p>}
+          <h1 className="font-display mt-3 text-[1.8rem] sm:text-4xl md:text-5xl leading-[1.08] font-medium break-words">{title}</h1>
+          {copy && <p className="mt-4 text-[14px] sm:text-[14.5px] leading-relaxed text-soft break-words">{copy}</p>}
         </Reveal>
       </div>
     </section>
@@ -116,19 +116,19 @@ export default function About() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-6 py-16">
+      <section className="mx-auto max-w-3xl px-5 sm:px-6 py-14 md:py-16">
         <SectionHead center kicker="Journey" title="Roadmap of the company." />
         <div className="mt-8 relative">
-          <div className="absolute left-1/2 top-0 bottom-0 w-px bg-brand/25" />
-          <div className="space-y-5">
+          <div className="absolute left-3 sm:left-1/2 top-0 bottom-0 w-px bg-brand/25" />
+          <div className="space-y-4 sm:space-y-5">
             {c.timeline.map((t, i) => (
               <Reveal key={t.year} delay={Math.min(i * 0.03, 0.25)}>
-                <div className={`relative flex ${i % 2 ? 'justify-start' : 'justify-end'}`}>
-                  <span className="absolute left-1/2 top-6 h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-brand ring-4 ring-brand/15" />
-                  <div className={`w-[46%] rounded-2xl border border-ink/10 bg-white p-4 ${i % 2 ? 'text-right' : ''}`}>
-                    <p className="font-display text-2xl text-brand">{t.year}</p>
-                    <p className="text-[13.5px] font-semibold">{t.title}</p>
-                    {t.note && <p className="text-[12.5px] text-soft">{t.note}</p>}
+                <div className={`relative flex pl-9 sm:pl-0 ${i % 2 ? 'sm:justify-start' : 'sm:justify-end'}`}>
+                  <span className="absolute left-3 sm:left-1/2 top-6 h-2.5 w-2.5 -translate-x-1/2 rounded-full bg-brand ring-4 ring-brand/15" />
+                  <div className={`w-full sm:w-[46%] rounded-2xl border border-ink/10 bg-white p-4 ${i % 2 ? 'sm:text-right' : ''}`}>
+                    <p className="font-display text-xl sm:text-2xl text-brand">{t.year}</p>
+                    <p className="text-[13px] sm:text-[13.5px] font-semibold break-words">{t.title}</p>
+                    {t.note && <p className="text-[12px] sm:text-[12.5px] text-soft break-words">{t.note}</p>}
                   </div>
                 </div>
               </Reveal>

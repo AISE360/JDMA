@@ -38,12 +38,12 @@ export default function Expertise({ onBrochure }: { onBrochure: OpenBrochure }) 
       </section>
       <div className="mx-auto max-w-6xl px-6 pb-16">
         <SectionHead kicker="At a glance" title="Numbers boards remember." />
-        <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-6">
           {c.stats.map((s) => (
-            <div key={s.label} className="border-l border-ink/10 pl-5">
-              <p className="font-display text-4xl">{s.value}{s.suffix}</p>
-              <p className="mt-1 text-[12.5px] font-semibold">{s.label}</p>
-              <p className="text-[11.5px] text-soft">{s.sub}</p>
+            <div key={s.label} className="border-l border-ink/10 pl-4 md:pl-5 min-w-0">
+              <p className="font-display text-[1.6rem] sm:text-3xl md:text-4xl leading-none break-words">{s.value}{s.suffix}</p>
+              <p className="mt-1 text-[12px] md:text-[12.5px] font-semibold break-words">{s.label}</p>
+              <p className="text-[11px] md:text-[11.5px] text-soft break-words">{s.sub}</p>
             </div>
           ))}
         </div>

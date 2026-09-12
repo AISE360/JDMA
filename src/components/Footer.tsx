@@ -10,7 +10,7 @@ export default function Footer() {
         <div className="grid gap-10 md:grid-cols-[1.3fr_1fr_1fr]">
           <div>
             <span className="inline-block bg-white px-3 py-2">
-              <img src="/assets/jpma-logo-blue.png" alt="J.P. Mukherji & Associates" className="h-10 w-auto object-contain" />
+              <img src="/assets/jpma-logo-blue.png" alt="J.P. Mukherji & Associates" className="h-7 md:h-8 w-auto max-w-[200px] object-contain" />
             </span>
             <p className="mt-5 max-w-xs font-mono text-[11px] uppercase leading-relaxed tracking-[0.04em] text-white/60">
               {siteSettings.footerAbout || "India's first end-to-end sugar industry consultancy, concept to commissioning across 30+ countries since 1972."}
