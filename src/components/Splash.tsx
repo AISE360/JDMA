@@ -204,7 +204,7 @@ export default function Splash({ done }: { done: () => void }) {
 
   return (
     <motion.div
-      className="fixed inset-0 z-[200] flex items-center justify-center bg-white h-[100svh] px-4 box-border overflow-hidden"
+      className="fixed inset-0 z-[200] flex items-center justify-center bg-white blueprint h-[100svh] px-4 box-border overflow-hidden"
       initial={{ opacity: 1 }}
       animate={{ opacity: gone ? 0 : 1 }}
       transition={{ duration: 0.35, ease: 'easeOut' }}
