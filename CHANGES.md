@@ -56,6 +56,14 @@
 > coupling PDFs are gated downloads on Innovation, now also cross-linked from a product brochure
 > band on Services. No other product PDFs exist on the live site, so nothing else to attach.
 >
+> **Product family fixed to 14:** heading said fourteen but only ten items existed. Split merged
+> entries and restored Milling System Improvement and Pressure Feeders. Auto-migration upgrades
+> existing browsers without touching user edits.
+>
+> **Deploy wired (GitHub/Netlify/Supabase):** repo pushed to GitHub `main`; `netlify.toml` (build
+> dist, SPA fallback, asset caching); `jobs` content table added to schema; admin CMS now reads
+> AND writes Supabase when keys are present (local mode unchanged without keys).
+>
 > **Admin v2 (proper CMS):** the JSON-textarea editor was replaced with a standalone admin app —
 > no website navbar/footer/floating button on `/admin` (only the logo in its own sidebar/topbar).
 > New: dark sidebar with Dashboard, 3 lead inboxes, 12 form-based content collections and Site
