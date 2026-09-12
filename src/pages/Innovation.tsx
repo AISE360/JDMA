@@ -1,21 +1,23 @@
-import { useContent } from '../hooks/useContent'
+import { useContent, getBlock } from '../hooks/useContent'
 import { Kicker, Pill, Reveal, SectionHead } from '../components/ui'
 import type { OpenBrochure } from '../components/BrochureModal'
 import { PageHero } from './About'
 
 export default function Innovation({ onBrochure }: { onBrochure: OpenBrochure }) {
   const c = useContent()
+  const hb = getBlock(c, 'hero-innovation')
+  const mcu = getBlock(c, 'innovation-mcu')
   return (
     <div>
-      <PageHero eyebrow="R&D · Products" title="Patented designs, proven in cane." copy="MCU (patent 2023 · CEAI innovation award) and a family of mill, clarification and evaporation upgrades, supplied via Jyoti Sugar Engineering." />
+      <PageHero eyebrow={hb.subtitle} title={hb.title} copy={hb.copy} />
       <section className="mx-auto max-w-6xl px-6 py-14 grid md:grid-cols-2 gap-10 items-center">
         <Reveal>
-          <img src="/assets/mcu-patent-certificate.jpg" alt="MCU patent certificate 2023" className="w-full rounded-[2rem] img-soft lift" />
+          <img src={mcu.image} alt="MCU patent certificate 2023" className="w-full rounded-[2rem] img-soft lift" />
         </Reveal>
         <Reveal delay={0.1}>
           <Kicker>Flagship · Moisture Control Unit</Kicker>
-          <h2 className="font-display mt-3 text-3xl md:text-4xl leading-tight">The MCU, <em>moisture & pol, under control.</em></h2>
-          <p className="mt-4 text-[14.5px] text-soft leading-relaxed">Developed in-house, patented in 2023 and recognised by CEAI for innovation. Installed with mill-improvement systems (rope couplings, GRPF) across India and Indonesia.</p>
+          <h2 className="font-display mt-3 text-3xl md:text-4xl leading-tight">{mcu.title} <em>{mcu.subtitle}</em></h2>
+          <p className="mt-4 text-[14.5px] text-soft leading-relaxed">{mcu.copy}</p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Pill onClick={onBrochure}>Brochure with specs</Pill>
             <Pill to="/contact" tone="outline">Ask an engineer</Pill>

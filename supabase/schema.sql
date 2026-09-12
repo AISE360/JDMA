@@ -96,6 +96,20 @@ create table if not exists jobs (
   created_at timestamptz default now()
 );
 
+-- Fixed-slot page content blocks (ids like hero-about, home-ripple).
+-- Missing rows fall back to built-in defaults, so seeding is optional.
+create table if not exists content_blocks (
+  block_id text primary key,
+  page text default '',
+  section text default '',
+  title text default '',
+  subtitle text default '',
+  copy text default '',
+  image text default '',
+  items jsonb default '[]'::jsonb,
+  updated_at timestamptz default now()
+);
+
 -- ---------- lead tables ----------
 create table if not exists brochure_leads (
   id uuid primary key default gen_random_uuid(),
@@ -150,6 +164,7 @@ alter table news enable row level security;
 alter table gallery enable row level security;
 alter table documents enable row level security;
 alter table jobs enable row level security;
+alter table content_blocks enable row level security;
 alter table brochure_leads enable row level security;
 alter table enquiries enable row level security;
 alter table job_applications enable row level security;
@@ -169,6 +184,7 @@ create policy "public read news" on news for select using (true);
 create policy "public read gallery" on gallery for select using (true);
 create policy "public read docs" on documents for select using (true);
 create policy "public read jobs" on jobs for select using (true);
+create policy "public read blocks" on content_blocks for select using (true);
 
 -- Anyone can submit leads (brochure gate / forms); only staff reads them
 create policy "anyone can insert brochure lead" on brochure_leads for insert with check (true);
@@ -190,12 +206,13 @@ create policy "staff all news" on news for all using (auth.role() = 'authenticat
 create policy "staff all gallery" on gallery for all using (auth.role() = 'authenticated');
 create policy "staff all docs" on documents for all using (auth.role() = 'authenticated');
 create policy "staff all jobs" on jobs for all using (auth.role() = 'authenticated');
+create policy "staff all blocks" on content_blocks for all using (auth.role() = 'authenticated');
 create policy "staff read brochure leads" on brochure_leads for select using (auth.role() = 'authenticated');
 create policy "staff read enquiries" on enquiries for select using (auth.role() = 'authenticated');
 create policy "staff read applications" on job_applications for select using (auth.role() = 'authenticated');
 
 -- ---------- seed (migrated from legacy site) ----------
-insert into site_settings (id, data) values (1, '{"company":"J. P. Mukherji & Associates Pvt. Ltd.","phone1":"+91 20 25397303","phone2":"+91 7756891500","email1":"info@jpma.org.in","email2":"marketing@jpma.org.in","address":"''Jyoti House'', 172, Dahanukar Colony, Kothrud, Pune - 411 038, INDIA","brochurePath":"/assets/JPMA_Brochure_2025.pdf","heroVideo":"https://www.youtube.com/embed/g7SYnthaIKk?si=FtzKPmG_e7khwPId"}'::jsonb)
+insert into site_settings (id, data) values (1, '{"company":"J. P. Mukherji & Associates Pvt. Ltd.","phone1":"+91 20 25397303","phone2":"+91 7756891500","email1":"info@jpma.org.in","email2":"marketing@jpma.org.in","address":"''Jyoti House'', 172, Dahanukar Colony, Kothrud, Pune - 411 038, INDIA","brochurePath":"/assets/JPMA_Brochure_2025.pdf","heroVideo":"https://www.youtube.com/embed/g7SYnthaIKk?si=FtzKPmG_e7khwPId","footerAbout":"India''s first end-to-end sugar industry consultancy, concept to commissioning across 30+ countries since 1972."}'::jsonb)
 on conflict (id) do nothing;
 
 insert into stats (sort_order, data) values

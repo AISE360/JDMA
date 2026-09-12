@@ -11,6 +11,7 @@ export const siteSettings = {
   email1: 'info@jpma.org.in',
   email2: 'marketing@jpma.org.in',
   address: "'Jyoti House', 172, Dahanukar Colony, Kothrud, Pune – 411 038, INDIA",
+  footerAbout: "India's first end-to-end sugar industry consultancy, concept to commissioning across 30+ countries since 1972.",
   facebook: 'https://www.facebook.com/profile.php?id=100086787363629',
   linkedin: 'https://www.linkedin.com/company/j-p-mukherji-associates-private-limited/',
   brochurePath: '/assets/JPMA_Brochure_2025.pdf',

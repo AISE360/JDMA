@@ -42,18 +42,18 @@ export default function Navbar({ onBrochure }: { onBrochure: OpenBrochure }) {
       if (dy > 0) {
         upAcc.current = 0
         downAcc.current += dy
-        if (downAcc.current > 48) setHidden(true)
+        if (downAcc.current > 64) setHidden(true)
       } else if (dy < 0) {
         downAcc.current = 0
         upAcc.current -= dy
-        if (upAcc.current > 10) setHidden(false)
+        if (upAcc.current > 4) setHidden(false)
       }
     }
     fn()
     window.addEventListener('scroll', fn, { passive: true })
     return () => window.removeEventListener('scroll', fn)
   }, [])
-  useEffect(() => { setOpen(false) }, [loc.pathname, loc.search, loc.hash])
+  useEffect(() => { setOpen(false); lastY.current = window.scrollY; upAcc.current = 0; downAcc.current = 0; setHidden(false) }, [loc.pathname, loc.search, loc.hash])
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
@@ -68,7 +68,7 @@ export default function Navbar({ onBrochure }: { onBrochure: OpenBrochure }) {
 
   return (
     <>
-      <header className={`sticky top-0 z-40 bg-paper/92 backdrop-blur-md transition-all duration-300 ${scrolled ? 'shadow-[0_14px_36px_-20px_rgba(38,49,62,0.4)]' : ''} ${hidden && !open ? '-translate-y-full' : 'translate-y-0'}`}>
+      <header className={`sticky top-0 z-40 bg-paper/92 backdrop-blur-md will-change-transform transition-transform duration-300 ease-out ${scrolled ? 'shadow-[0_14px_36px_-20px_rgba(38,49,62,0.4)]' : ''} ${hidden && !open ? '-translate-y-full' : 'translate-y-0'}`}>
         <div className="mx-auto max-w-7xl px-4 md:px-5 flex items-center justify-between gap-2 py-3">
           <Link to="/" aria-label="JPMA home" className="shrink-0 min-w-0">
             <img src="/assets/jpma-logo-blue.png" alt="J. P. Mukherji & Associates" className="h-8 sm:h-9 md:h-11 w-auto max-w-[148px] sm:max-w-[210px] md:max-w-none object-contain" />

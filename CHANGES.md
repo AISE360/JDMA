@@ -64,6 +64,18 @@
 > dist, SPA fallback, asset caching); `jobs` content table added to schema; admin CMS now reads
 > AND writes Supabase when keys are present (local mode unchanged without keys).
 >
+> **Admin coverage v3 (page text & sections):** audit found ~40 hardcoded strings outside the CMS.
+> New `blocks` collection (27 fixed slots: all 8 page headers, home challenge/ripple/help/split/
+> unique/leader/film/resource, about overview/founder/vision/team/values/certs/global, expertise
+> CTA, projects recent band, innovation MCU, careers footnote) plus footer blurb and contact details
+> wired to settings. Every headline, paragraph, checklist, image and value label is now editable
+> from Admin, locally and in Supabase (`content_blocks` table). Deliberately code-level only:
+> nav structure, button labels/links, form labels, footer link list.
+>
+> **Navbar scroll v3:** reveal on ~4px cumulative upward travel (effectively immediate, jitter-safe),
+> hide after 64px deliberate downward travel, transform-only transition (zero layout shift), state
+> reset on route change, never hides with the mobile menu open.
+>
 > **Admin v2 (proper CMS):** the JSON-textarea editor was replaced with a standalone admin app —
 > no website navbar/footer/floating button on `/admin` (only the logo in its own sidebar/topbar).
 > New: dark sidebar with Dashboard, 3 lead inboxes, 12 form-based content collections and Site

@@ -37,6 +37,15 @@ const stripId = (it: Item) => {
 
 export async function fetchCollection(key: CollectionKey): Promise<Item[]> {
   const db = sb()
+  if (key === 'blocks') {
+    const { data, error } = await db.from('content_blocks').select('*')
+    if (error) throw error
+    return (data ?? []).map((r: any) => ({
+      id: r.block_id, page: r.page ?? '', section: r.section ?? '',
+      title: r.title ?? '', subtitle: r.subtitle ?? '', copy: r.copy ?? '',
+      image: r.image ?? '', items: Array.isArray(r.items) ? r.items : [],
+    }))
+  }
   if (DATA_TABLES[key]) {
     const { data, error } = await db.from(DATA_TABLES[key]).select('*').order('sort_order', { ascending: true })
     if (error) throw error
@@ -74,6 +83,15 @@ export async function fetchCollection(key: CollectionKey): Promise<Item[]> {
 
 export async function addRemoteItem(key: CollectionKey, item: Item, atEnd = true): Promise<Item> {
   const db = sb()
+  if (key === 'blocks') {
+    const { data, error } = await db.from('content_blocks').upsert({
+      block_id: String(item.id), page: String(item.page ?? ''), section: String(item.section ?? ''),
+      title: String(item.title ?? ''), subtitle: String(item.subtitle ?? ''), copy: String(item.copy ?? ''),
+      image: String(item.image ?? ''), items: Array.isArray(item.items) ? item.items : [],
+    }, { onConflict: 'block_id' }).select('*').single()
+    if (error) throw error
+    return { id: data.block_id, page: data.page, section: data.section, title: data.title, subtitle: data.subtitle, copy: data.copy, image: data.image, items: data.items ?? [] }
+  }
   if (DATA_TABLES[key]) {
     const rows = await fetchCollection(key)
     const payload = { data: stripId(item), ...(ORDERED.has(key) ? { sort_order: atEnd ? rows.length + 1 : 0 } : {}) }
@@ -109,6 +127,15 @@ export async function addRemoteItem(key: CollectionKey, item: Item, atEnd = true
 
 export async function saveRemoteItem(key: CollectionKey, item: Item): Promise<void> {
   const db = sb()
+  if (key === 'blocks') {
+    const { error } = await db.from('content_blocks').upsert({
+      block_id: String(item.id), page: String(item.page ?? ''), section: String(item.section ?? ''),
+      title: String(item.title ?? ''), subtitle: String(item.subtitle ?? ''), copy: String(item.copy ?? ''),
+      image: String(item.image ?? ''), items: Array.isArray(item.items) ? item.items : [],
+    }, { onConflict: 'block_id' })
+    if (error) throw error
+    return
+  }
   if (DATA_TABLES[key]) {
     const { error } = await db.from(DATA_TABLES[key]).update({ data: stripId(item) }).eq('id', item.id)
     if (error) throw error
@@ -141,6 +168,12 @@ export async function saveRemoteItem(key: CollectionKey, item: Item): Promise<vo
 
 export async function deleteRemoteItem(key: CollectionKey, id: string, kind?: string): Promise<void> {
   const db = sb()
+  if (key === 'blocks') {
+    // blocks are fixed slots: deleting resets to blank rather than removing the slot
+    const { error } = await db.from('content_blocks').delete().eq('block_id', id)
+    if (error) throw error
+    return
+  }
   if (DATA_TABLES[key]) {
     const { error } = await db.from(DATA_TABLES[key]).delete().eq('id', id)
     if (error) throw error

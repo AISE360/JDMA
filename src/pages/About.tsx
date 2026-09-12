@@ -1,4 +1,4 @@
-import { useContent } from '../hooks/useContent'
+import { useContent, getBlock } from '../hooks/useContent'
 import { CheckList, Kicker, Pill, Reveal, SectionHead } from '../components/ui'
 
 const VALUE_ICONS: Record<string, string> = {
@@ -40,20 +40,22 @@ export function PageHero({ eyebrow, title, copy }: { eyebrow: string; title: str
 
 export default function About() {
   const c = useContent()
+  const B = (id: string) => getBlock(c, id)
+  const hb = B('hero-about')
   return (
     <div>
-      <PageHero eyebrow="About JPMA" title="Five decades of sweet, bankable engineering." copy="Established 1972 · incorporated 1974 · ISO 9001:2015. From troubleshooting startup to India's first end-to-end sugar consultancy." />
+      <PageHero eyebrow={hb.subtitle} title={hb.title} copy={hb.copy} />
 
       <section className="mx-auto max-w-6xl px-6 py-16 grid md:grid-cols-2 gap-10 items-center">
         <Reveal>
-          <img src="/assets/jpma-director.jpg" alt="JPMA" className="w-full aspect-[4/3] object-cover rounded-[2rem] img-soft lift" />
+          <img src={B('about-overview').image} alt="JPMA" className="w-full aspect-[4/3] object-cover rounded-[2rem] img-soft lift" />
         </Reveal>
         <Reveal delay={0.1}>
           <Kicker>Overview</Kicker>
-          <h2 className="font-display mt-3 text-3xl md:text-4xl leading-tight">Founded by a pioneer, run by professionals.</h2>
+          <h2 className="font-display mt-3 text-3xl md:text-4xl leading-tight">{B('about-overview').title}</h2>
           <div className="mt-4 space-y-3 text-[14.5px] leading-relaxed text-soft">
-            <p><strong className="text-ink">J. P. Mukherji & Associates Pvt. Ltd.</strong> was established in 1972 and incorporated in 1974. Founder Mr. J. P. Mukherji, earlier Chief Executive of Walchandnagar Industries, pioneered indigenous sugar machinery manufacture, turnkey projects and their export from India.</p>
-            <p>Today a 60+ professional firm specialising in sugarcane, sugar and by-products, with emphasis on new technologies for raw, refined and white sugar, cogeneration, ethanol and ENA.</p>
+            <p>{B('about-overview').copy}</p>
+            <p>{B('about-overview').subtitle}</p>
           </div>
         </Reveal>
       </section>
@@ -63,16 +65,14 @@ export default function About() {
         <div className="mx-auto max-w-6xl px-6 md:px-10 py-14 md:py-16 grid md:grid-cols-2 gap-10 items-center">
           <Reveal>
             <p className="text-[11px] font-bold uppercase tracking-[0.26em] text-white/60">The founder</p>
-            <h2 className="font-display mt-3 text-3xl md:text-[2.6rem] leading-[1.15]">Mr. J. P. Mukherji started with a small group of experts.</h2>
+            <h2 className="font-display mt-3 text-3xl md:text-[2.6rem] leading-[1.15]">{B('about-founder').title}</h2>
             <p className="mt-4 max-w-lg text-[14.5px] leading-relaxed text-white/75">
-              After retiring from Walchandnagar Industries, where he pioneered sugar machinery manufacture
-              and turnkey project exports, he founded JPMA in 1972. Troubleshooting first, then full
-              concept to commissioning consultancy: that founder's discipline still runs the firm.
+              {B('about-founder').copy}
             </p>
           </Reveal>
           <Reveal delay={0.1}>
-            <img src="/assets/director.jpg" alt="JPMA leadership team with the founder's bust, Pune head office" className="w-full aspect-[16/10] object-cover object-top rounded-[2rem] shadow-2xl img-soft" />
-            <p className="mt-3 text-[12px] text-white/55">The JPMA leadership team with the founder's bust, head office, Pune.</p>
+            <img src={B('about-founder').image} alt="JPMA leadership team with the founder's bust, Pune head office" className="w-full aspect-[16/10] object-cover object-top rounded-[2rem] shadow-2xl img-soft" />
+            <p className="mt-3 text-[12px] text-white/55">{B('about-founder').subtitle}</p>
           </Reveal>
         </div>
       </section>
@@ -80,21 +80,28 @@ export default function About() {
       {/* vision / mission */}
       <section className="mx-auto max-w-6xl px-6 py-16 grid md:grid-cols-2 gap-10 items-center">
         <Reveal>
-          <img src="/assets/vision-mission.jpg" alt="Vision and mission" className="w-full aspect-[4/3] object-cover rounded-[2rem] img-soft lift" />
+          <img src={B('about-vision').image} alt="Vision and mission" className="w-full aspect-[4/3] object-cover rounded-[2rem] img-soft lift" />
         </Reveal>
         <Reveal delay={0.1}>
           <Kicker>Where we're headed</Kicker>
-          <h2 className="font-display mt-3 text-3xl md:text-4xl leading-tight">Vision & mission.</h2>
+          <h2 className="font-display mt-3 text-3xl md:text-4xl leading-tight">{B('about-vision').title}</h2>
           <div className="mt-6 space-y-4">
-            <div className="rounded-2xl bg-parchment p-5"><p className="text-[10.5px] font-bold uppercase tracking-[0.2em] text-brand">Vision</p><p className="mt-1 text-[13.5px]">Connecting sugar business with technology resources to help sugar and allied industry.</p></div>
-            <div className="rounded-2xl bg-parchment p-5"><p className="text-[10.5px] font-bold uppercase tracking-[0.2em] text-brand">Mission</p><p className="mt-1 text-[13.5px]">Consistently meet or exceed client satisfaction in quality, cost and delivery, through continual improvement and full statutory compliance.</p></div>
+            {B('about-vision').items.map((row) => {
+              const [label = '', text = ''] = row.split(' | ')
+              return (
+                <div key={label} className="rounded-2xl bg-parchment p-5">
+                  <p className="text-[10.5px] font-bold uppercase tracking-[0.2em] text-brand">{label}</p>
+                  <p className="mt-1 text-[13.5px]">{text}</p>
+                </div>
+              )
+            })}
           </div>
         </Reveal>
       </section>
 
       <section className="bg-mist rounded-[2.5rem] md:rounded-[3.5rem] mx-3 md:mx-6 py-16">
         <div className="mx-auto max-w-6xl px-6">
-          <SectionHead center kicker="Leadership" title="Board of directors." copy="Unmatched experience and far-reaching vision, under Chairman & Managing Director Mr. Shirish Karandikar." />
+          <SectionHead center kicker="Leadership" title={B('about-team').title} copy={B('about-team').copy} />
           <div className="mt-10 grid sm:grid-cols-3 gap-8">
             {c.team.map((m, i) => (
               <Reveal key={m.name} delay={i * 0.08} className="text-center">
@@ -134,20 +141,20 @@ export default function About() {
         <img src="/assets/jpma-values-banner.jpg" alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover opacity-[0.07] img-soft" />
       <div className="relative mx-auto max-w-6xl px-6 py-16 grid md:grid-cols-2 gap-10 items-start">
         <div>
-          <SectionHead kicker="Values & systems" title="What we refuse to compromise." />
+          <SectionHead kicker="Values & systems" title={B('about-values').title} />
           <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-8">
-            {['Customer orientation', 'Sustainability', 'Ethical behaviour', 'Social Responsibility', 'Care for Environment', 'Equal Opportunity', 'Cooperation & Loyalty'].map((v, i) => (
+            {B('about-values').items.map((v, i) => (
               <ValueBadge key={v} label={v} i={i} />
             ))}
           </div>
           <div className="mt-6 rounded-2xl border border-ink/10 bg-white p-6">
-            <p className="text-[10.5px] font-bold uppercase tracking-[0.2em] text-brand">Certifications</p>
-            <CheckList items={['ISO 9001:2015, Quality', 'ISO 50001:2018, Energy', 'ISO 45001:2018, Health & Safety', 'ISO 14001:2015, Environment', 'SA 8000, Social responsibility']} />
+            <p className="text-[10.5px] font-bold uppercase tracking-[0.2em] text-brand">{B('about-certs').title}</p>
+            <CheckList items={B('about-certs').items} />
           </div>
         </div>
         <Reveal delay={0.1}>
-          <img src="/assets/global-presence.jpg" alt="Global presence" className="w-full rounded-[2rem] img-soft lift" />
-          <p className="mt-3 text-[12.5px] text-soft">30+ countries across four continents. African Development Bank (DACON W038178) · EXIM Bank empanelled consultant.</p>
+          <img src={B('about-global').image} alt="Global presence" className="w-full rounded-[2rem] img-soft lift" />
+          <p className="mt-3 text-[12.5px] text-soft">{B('about-global').copy}</p>
           <div className="mt-5"><Pill to="/contact">Talk to us</Pill></div>
         </Reveal>
       </div>

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useContent } from '../hooks/useContent'
+import { useContent, getBlock } from '../hooks/useContent'
 import { Kicker, Pill, Reveal } from '../components/ui'
 import { PageHero } from './About'
 
@@ -46,6 +46,7 @@ function Lightbox({ images, index, onClose, onNav }: { images: { src: string; ti
 
 export default function Insights() {
   const c = useContent()
+  const hb = getBlock(c, 'hero-insights')
   const [box, setBox] = useState<number | null>(null)
 
   const patentIdx = c.news.findIndex((n) => n.image.includes('mcu-patent'))
@@ -59,7 +60,7 @@ export default function Insights() {
 
   return (
     <div>
-      <PageHero eyebrow="Insights · News & gallery" title="Seminars, milestones & site life." copy="Kenya & Indonesia technical seminars, JPMA Day, presidential audience, MCU patent, plus the gallery." />
+      <PageHero eyebrow={hb.subtitle} title={hb.title} copy={hb.copy} />
 
       {/* patent spotlight: full certificate, uncropped, readable */}
       {patent && (

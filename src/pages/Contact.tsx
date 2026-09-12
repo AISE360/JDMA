@@ -1,12 +1,15 @@
 import { useState } from 'react'
 import { COUNTRIES } from '../data/countries'
-import { saveLead } from '../hooks/useContent'
+import { saveLead, useContent, getBlock } from '../hooks/useContent'
 import { Kicker, Reveal } from '../components/ui'
 import { PageHero } from './About'
 
 const inp = 'w-full rounded-xl border border-ink/15 bg-white px-4 py-3 text-sm outline-none placeholder:text-ink/35 focus:border-brand'
 
 export default function Contact() {
+  const c = useContent()
+  const hb = getBlock(c, 'hero-contact')
+  const s = c.settings
   const [f, setF] = useState({ name: '', email: '', org: '', msg: '', iso: 'IN', phone: '' })
   const [status, setStatus] = useState('')
   const dial = COUNTRIES.find((c) => c.iso === f.iso)?.dial ?? '91'
@@ -26,16 +29,16 @@ export default function Contact() {
 
   return (
     <div>
-      <PageHero eyebrow="Contact" title="Tell us about your plant." copy="Jyoti House, Kothrud, Pune, serving India and 30+ countries. Greenfield, expansion, audit or troubleshooting." />
+      <PageHero eyebrow={hb.subtitle} title={hb.title} copy={hb.copy} />
       <section className="mx-auto max-w-6xl px-6 py-12 grid md:grid-cols-2 gap-10">
         <Reveal>
           <Kicker>Head office</Kicker>
           <h2 className="font-display mt-3 text-3xl">Jyoti House, Pune.</h2>
           <ul className="mt-5 space-y-2 text-[14px] text-soft">
-            <li>'Jyoti House', 172, Dahanukar Colony, Kothrud, Pune – 411 038, INDIA</li>
-            <li>+91 20 25397303 · +91 7756891500</li>
-            <li>info@jpma.org.in · marketing@jpma.org.in</li>
-            <li>Fax (020) 25399287</li>
+            <li>{s.address}</li>
+            <li>{s.phone1} · {s.phone2}</li>
+            <li>{s.email1} · {s.email2}</li>
+            <li>Fax {s.fax}</li>
           </ul>
           <div className="mt-6 overflow-hidden rounded-[1.5rem] border border-ink/10">
             <iframe title="JPMA map" src="https://www.google.com/maps?q=Dahanukar+Colony+Kothrud+Pune&output=embed" className="h-64 w-full border-0" loading="lazy" />

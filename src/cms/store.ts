@@ -24,9 +24,17 @@ export interface CollectionDef {
 
 export type CollectionKey =
   | 'heroSlides' | 'stats' | 'businessAreas' | 'services' | 'projects'
-  | 'products' | 'news' | 'team' | 'timeline' | 'gallery' | 'documents' | 'jobs'
+  | 'products' | 'news' | 'team' | 'timeline' | 'gallery' | 'documents' | 'jobs' | 'blocks'
 
 export type Item = { id: string } & Record<string, any>
+
+export interface Block {
+  title: string
+  subtitle: string
+  copy: string
+  image: string
+  items: string[]
+}
 
 export const IMAGE_OPTIONS = [
   '/assets/slider-one.jpg', '/assets/slider-two.jpg', '/assets/slider-three.jpg',
@@ -153,6 +161,18 @@ export const SCHEMAS: CollectionDef[] = [
       { key: 'desc', label: 'Description', type: 'textarea' },
     ],
   },
+  {
+    key: 'blocks', label: 'Page text & sections', singular: 'Block', addLabel: 'Add block', ordered: false,
+    fields: [
+      { key: 'page', label: 'Page', type: 'select', options: ['home', 'about', 'expertise', 'services', 'projects', 'innovation', 'insights', 'careers', 'contact', 'global'] },
+      { key: 'section', label: 'Section label (for you)', type: 'text' },
+      { key: 'title', label: 'Heading', type: 'text' },
+      { key: 'subtitle', label: 'Secondary line', type: 'text' },
+      { key: 'copy', label: 'Body copy', type: 'textarea' },
+      { key: 'image', label: 'Image (if the section has one)', type: 'image' },
+      { key: 'items', label: 'List items (one per line, use "Title | description" for split rows)', type: 'lines' },
+    ],
+  },
 ]
 
 export const SETTINGS_FIELDS: FieldDef[] = [
@@ -164,6 +184,7 @@ export const SETTINGS_FIELDS: FieldDef[] = [
   { key: 'email1', label: 'Email 1', type: 'text' },
   { key: 'email2', label: 'Email 2', type: 'text' },
   { key: 'address', label: 'Address', type: 'textarea' },
+  { key: 'footerAbout', label: 'Footer about blurb', type: 'textarea' },
   { key: 'facebook', label: 'Facebook URL', type: 'text' },
   { key: 'linkedin', label: 'LinkedIn URL', type: 'text' },
   { key: 'brochurePath', label: 'Brochure file path', type: 'text' },
@@ -172,6 +193,43 @@ export const SETTINGS_FIELDS: FieldDef[] = [
 
 // ---------- defaults (deep-cloned from seed) ----------
 const clone = <T,>(v: T): T => JSON.parse(JSON.stringify(v))
+
+export interface BlockSeed { id: string; page: string; section: string; title: string; subtitle: string; copy: string; image: string; items: string[] }
+
+export const BLOCK_DEFAULTS: BlockSeed[] = [
+  // page headers: subtitle = kicker, title = heading, copy = subline
+  // page headers: subtitle = kicker, title = heading, copy = subline
+  { id: 'hero-about', page: 'about', section: 'Page header', title: 'Five decades of sweet, bankable engineering.', subtitle: 'About JPMA', copy: 'Established 1972 · incorporated 1974 · ISO 9001:2015. From troubleshooting startup to India\'s first end-to-end sugar consultancy.', image: '', items: [] },
+  { id: 'hero-expertise', page: 'expertise', section: 'Page header', title: 'Anything and everything in sugar.', subtitle: 'Expertise · Business areas', copy: 'Four decades of concept-to-commissioning across sugar, refinery, cogeneration, ethanol, agriculture and special studies.', image: '', items: [] },
+  { id: 'hero-services', page: 'services', section: 'Page header', title: 'One-stop engineering & consulting.', subtitle: 'Services', copy: 'Studies that de-risk decisions · engineering vendors can build · supervision that protects time, cost and quality.', image: '', items: [] },
+  { id: 'hero-projects', page: 'projects', section: 'Page header', title: 'A sweet presence, worldwide.', subtitle: 'Projects', copy: '500+ assignments across India and 30+ countries, sugar, refinery, cogeneration, distillery and agriculture.', image: '', items: [] },
+  { id: 'hero-innovation', page: 'innovation', section: 'Page header', title: 'Patented designs, proven in cane.', subtitle: 'R&D · Products', copy: 'MCU (patent 2023 · CEAI innovation award) and a family of mill, clarification and evaporation upgrades, supplied via Jyoti Sugar Engineering.', image: '', items: [] },
+  { id: 'hero-insights', page: 'insights', section: 'Page header', title: 'Seminars, milestones & site life.', subtitle: 'Insights · News & gallery', copy: 'Kenya & Indonesia technical seminars, JPMA Day, presidential audience, MCU patent, plus the gallery.', image: '', items: [] },
+  { id: 'hero-careers', page: 'careers', section: 'Page header', title: 'Do the sweetest engineering of your career.', subtitle: 'Careers', copy: '60+ professionals · BEE auditors · site leaders · design engineers. Pune home-office with India & international site exposure.', image: '', items: [] },
+  { id: 'hero-contact', page: 'contact', section: 'Page header', title: 'Tell us about your plant.', subtitle: 'Contact', copy: 'Jyoti House, Kothrud, Pune, serving India and 30+ countries. Greenfield, expansion, audit or troubleshooting.', image: '', items: [] },
+  // home sections
+  { id: 'home-challenge', page: 'home', section: 'Challenge (familiar pains)', title: 'Sugar projects can take many forms', subtitle: 'some loud, some quiet.', copy: 'Do any of these sound familiar?', image: '/assets/img-slide-one.jpg', items: ['Recovery stuck below expectation, and no one agrees why', 'Process steam stubbornly above 36% on cane', 'Expansion planned but the balances don’t close', 'Mills limping through season with rising downtime', 'A lender asking for a bankable DPR, fast', 'Distillery norms tightening toward zero-liquid discharge'] },
+  { id: 'home-ripple', page: 'home', section: 'Ripple effect band', title: 'The ripple effect of', subtitle: 'doing sugar well', copy: 'When engineered skilfully, a plant becomes a catalyst. It strengthens how teams operate, how communities thrive, and how owners invest with confidence.', image: '/assets/sugar-cane.jpg', items: ['Plant | Higher recovery, lower steam and power use, reliable season after season.', 'People | Safer floors, trained operators, engineers who stay and grow.', 'Place | Cleaner effluent, bagasse to power, cane farmers paid on time.'] },
+  { id: 'home-help', page: 'home', section: 'How we help (3 columns)', title: 'How we help', subtitle: '', copy: 'Three complementary practices, each designed to meet you where you are, and create the conditions for recovery, alignment and momentum.', image: '', items: ['Conceptual studies || When direction is unclear || Pre-feasibility & feasibility studies; Detailed & bankable project reports; Due diligence, valuation & EIA; Financial viability & market studies', 'Engineering & PMC || When execution must hold || FEED, P&IDs, layouts & tendering; Specs, BOQs & vendor finalisation; Site supervision, QA/QC & billing; Commissioning & handover', 'Energy, audit & R&D || When performance must rise || BEE-certified energy audits; Steam economy below 36% on cane; MCU, couplings & mill upgrades; Troubleshooting that sticks'] },
+  { id: 'home-split', page: 'home', section: 'Barrier split band', title: "Underperformance doesn't have to be", subtitle: 'a barrier.', copy: 'Handled well, it becomes efficiency, and a way forward.', image: '/assets/img-slide-two.jpg', items: [] },
+  { id: 'home-unique', page: 'home', section: 'What makes us unique', title: 'What makes JPMA', subtitle: 'unique?', copy: "Underperformance isn't just a disruption, it's information. Understanding it enables the efficiency needed to move ahead.", image: '', items: ['Beyond vendor advice, independent consultancy, accountable end to end', 'Five decades across 500+ plants in 30+ countries', 'Patented R&D (MCU) recognised with a national innovation award', 'BEE-certified energy auditors with lab-grade instruments', 'Single owner from feasibility to handover, no gaps between vendors'] },
+  { id: 'home-leader', page: 'home', section: 'Leader card', title: 'Ready to turn', subtitle: 'cane into clarity?', copy: 'JPMA works under the leadership of Chairman & Managing Director Mr. Shirish Karandikar, with Directors Mr. T. S. Rao and Mr. D. S. Nikam, a 60+ professional team of process engineers, energy auditors and site leaders, with decades of commissioning experience across four continents.', image: '/assets/board/karandikar.jpg', items: [] },
+  { id: 'home-film', page: 'home', section: 'Film section', title: 'Five decades,', subtitle: 'four minutes.', copy: 'Plants, people and commissioning floors across India and 30+ countries. This is what concept to commissioning looks like from the inside.', image: '', items: [] },
+  { id: 'home-resource', page: 'home', section: 'Brochure download band', title: 'The JPMA Company Brochure 2025', subtitle: 'Free resource', copy: 'Capabilities, project lists, certifications and contacts, in one PDF. Enter your number, any country, and download instantly.', image: '/assets/business-img.jpg', items: [] },
+  // about sections
+  { id: 'about-overview', page: 'about', section: 'Overview', title: 'Founded by a pioneer, run by professionals.', subtitle: 'Today a 60+ professional firm specialising in sugarcane, sugar and by-products, with emphasis on new technologies for raw, refined and white sugar, cogeneration, ethanol and ENA.', copy: 'J. P. Mukherji & Associates Pvt. Ltd. was established in 1972 and incorporated in 1974. Founder Mr. J. P. Mukherji, earlier Chief Executive of Walchandnagar Industries, pioneered indigenous sugar machinery manufacture, turnkey projects and their export from India.', image: '/assets/jpma-director.jpg', items: [] },
+  { id: 'about-founder', page: 'about', section: 'Founder band', title: 'Mr. J. P. Mukherji started with a small group of experts.', subtitle: 'The JPMA leadership team with the founder\'s bust, head office, Pune.', copy: 'After retiring from Walchandnagar Industries, where he pioneered sugar machinery manufacture and turnkey project exports, he founded JPMA in 1972. Troubleshooting first, then full concept to commissioning consultancy: that founder\'s discipline still runs the firm.', image: '/assets/director.jpg', items: [] },
+  { id: 'about-vision', page: 'about', section: 'Vision & mission', title: 'Vision & mission.', subtitle: '', copy: '', image: '/assets/vision-mission.jpg', items: ['Vision | Connecting sugar business with technology resources to help sugar and allied industry.', 'Mission | Consistently meet or exceed client satisfaction in quality, cost and delivery, through continual improvement and full statutory compliance.'] },
+  { id: 'about-team', page: 'about', section: 'Leadership heading', title: 'Board of directors.', subtitle: '', copy: 'Unmatched experience and far-reaching vision, under Chairman & Managing Director Mr. Shirish Karandikar.', image: '', items: [] },
+  { id: 'about-values', page: 'about', section: 'Values (labels only, icons follow the text)', title: 'What we refuse to compromise.', subtitle: '', copy: '', image: '', items: ['Customer orientation', 'Sustainability', 'Ethical behaviour', 'Social Responsibility', 'Care for Environment', 'Equal Opportunity', 'Cooperation & Loyalty'] },
+  { id: 'about-certs', page: 'about', section: 'Certifications', title: 'Certifications', subtitle: '', copy: '', image: '', items: ['ISO 9001:2015, Quality', 'ISO 50001:2018, Energy', 'ISO 45001:2018, Health & Safety', 'ISO 14001:2015, Environment', 'SA 8000, Social responsibility'] },
+  { id: 'about-global', page: 'about', section: 'Global presence note', title: '', subtitle: '', copy: '30+ countries across four continents. African Development Bank (DACON W038178) · EXIM Bank empanelled consultant.', image: '/assets/global-presence.jpg', items: [] },
+  // other pages
+  { id: 'expertise-cta', page: 'expertise', section: 'Bottom capability band', title: 'Get the full capability statement.', subtitle: 'Capability proof', copy: '', image: '', items: [] },
+  { id: 'projects-recent', page: 'projects', section: 'Recently completed band', title: 'Ethanol, sugar & cogen, delivered in the last year.', subtitle: 'Recently completed', copy: '500 KLPD grain ethanol feasibility · 10–100 KLPD juice ethanol DPRs · cassava ethanol · 150–400 KLPD dual-feed DPRs, conversions & audits · 3,500 TCD greenfield PMC · 6,000–10,000 TCD expansions.', image: '', items: [] },
+  { id: 'innovation-mcu', page: 'innovation', section: 'MCU flagship', title: 'The MCU,', subtitle: 'moisture & pol, under control.', copy: 'Developed in-house, patented in 2023 and recognised by CEAI for innovation. Installed with mill-improvement systems (rope couplings, GRPF) across India and Indonesia.', image: '/assets/mcu-patent-certificate.jpg', items: [] },
+  { id: 'careers-note', page: 'careers', section: 'Footnote under roles', title: '', subtitle: '', copy: 'General applications welcome, mention your discipline (process / mechanical / electrical / civil) in the note.', image: '', items: [] },
+]
 
 export function defaultsFor(key: CollectionKey): Item[] {
   switch (key) {
@@ -195,6 +253,7 @@ export function defaultsFor(key: CollectionKey): Item[] {
       })
       return base.map((g, i) => ({ id: `gal-${i + 1}`, url: g }))
     }
+    case 'blocks': return clone(BLOCK_DEFAULTS).map((b) => ({ ...b }))
     case 'documents': return [{ id: 'doc-1', title: 'JPMA Company Brochure 2025', file_url: '/assets/JPMA_Brochure_2025.pdf', category: 'brochure' }]
     case 'jobs': return [
       { id: 'job-1', title: 'Process Design Engineer, Sugar & Distillery', loc: 'Pune · Hybrid site travel', type: 'Full-time', desc: 'Mass/energy balances, equipment sizing, P&IDs and vendor coordination for 100–600 KLPD ethanol and 3,500–10,000 TCD sugar.' },

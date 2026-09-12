@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useContent, saveLead } from '../hooks/useContent'
+import { useContent, saveLead, getBlock } from '../hooks/useContent'
 import { COUNTRIES } from '../data/countries'
 import { CheckList, CircleImg, Kicker, Pill, Reveal, SectionHead } from '../components/ui'
 import type { OpenBrochure } from '../components/BrochureModal'
@@ -112,6 +112,7 @@ function ResourceForm({ brochurePath }: { brochurePath: string }) {
 
 export default function Home({ onBrochure }: { onBrochure: OpenBrochure }) {
   const c = useContent()
+  const B = (id: string) => getBlock(c, id)
   const [slide, setSlide] = useState(0)
   const [paused, setPaused] = useState(false)
   useEffect(() => {
@@ -178,21 +179,14 @@ export default function Home({ onBrochure }: { onBrochure: OpenBrochure }) {
         <span aria-hidden className="giant-mark absolute -right-8 top-6 hidden md:block text-[16rem]">&</span>
         <div className="relative mx-auto max-w-6xl px-6 py-20 md:py-24 grid md:grid-cols-2 gap-10 items-center">
           <Reveal>
-            <img src="/assets/img-slide-one.jpg" alt="Sugar plant" className="w-full aspect-[4/3] object-cover rounded-[2rem] img-soft lift" />
+            <img src={B('home-challenge').image} alt="Sugar plant" className="w-full aspect-[4/3] object-cover rounded-[2rem] img-soft lift" />
           </Reveal>
           <Reveal delay={0.1}>
             <h2 className="font-display text-3xl md:text-[2.4rem] leading-[1.15] font-medium">
-              Sugar projects can take many forms <em className="font-light"> some loud, some quiet.</em>
+              {B('home-challenge').title} <em className="font-light">{B('home-challenge').subtitle}</em>
             </h2>
-            <p className="mt-5 text-[11px] font-bold uppercase tracking-[0.24em] text-brand">Do any of these sound familiar?</p>
-            <CheckList items={[
-              'Recovery stuck below expectation, and no one agrees why',
-              'Process steam stubbornly above 36% on cane',
-              'Expansion planned but the balances don’t close',
-              'Mills limping through season with rising downtime',
-              'A lender asking for a bankable DPR, fast',
-              'Distillery norms tightening toward zero-liquid discharge',
-            ]} />
+            <p className="mt-5 text-[11px] font-bold uppercase tracking-[0.24em] text-brand">{B('home-challenge').copy}</p>
+            <CheckList items={B('home-challenge').items} />
           </Reveal>
         </div>
       </section>
@@ -200,48 +194,53 @@ export default function Home({ onBrochure }: { onBrochure: OpenBrochure }) {
       {/* 3, RIPPLE BAND */}
       <section className="bg-mist rounded-t-[2.5rem] md:rounded-t-[4rem] overflow-hidden">
         <div className="mx-auto max-w-3xl px-6 pt-16 md:pt-20 pb-10 text-center">
-          <SectionHead center kicker="Why it matters" title={<>The ripple effect of <em>doing sugar well</em></>} copy="When engineered skilfully, a plant becomes a catalyst. It strengthens how teams operate, how communities thrive, and how owners invest with confidence." />
+          <SectionHead center kicker="Why it matters" title={<>{B('home-ripple').title} <em>{B('home-ripple').subtitle}</em></>} copy={B('home-ripple').copy} />
           <div className="mt-8 space-y-6 text-left">
-            {[
-              ['Plant', 'Higher recovery, lower steam and power use, reliable season after season.', 'M12 2v20M2 12h20'],
-              ['People', 'Safer floors, trained operators, engineers who stay and grow.', 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75'],
-              ['Place', 'Cleaner effluent, bagasse to power, cane farmers paid on time.', 'M11 20A7 7 0 0 1 4 13c0-4 3-8 8-9 5 1 8 5 8 9a7 7 0 0 1-7 7M12 22v-8'],
-            ].map(([t, d, path]) => (
-              <Reveal key={t as string}>
-                <div className="flex gap-5 items-start">
-                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-brand/30 bg-white">
-                    <svg viewBox="0 0 24 24" className="h-5 w-5 text-brand" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={path as string} /></svg>
-                  </span>
-                  <div>
-                    <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand">{t}</p>
-                    <p className="mt-1 text-[14px] text-ink/75">{d}</p>
+            {B('home-ripple').items.map((row) => {
+              const [t = '', d = ''] = row.split(' | ')
+              const path = t.toLowerCase().startsWith('people')
+                ? 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75'
+                : t.toLowerCase().startsWith('place')
+                  ? 'M11 20A7 7 0 0 1 4 13c0-4 3-8 8-9 5 1 8 5 8 9a7 7 0 0 1-7 7M12 22v-8'
+                  : 'M12 2v20M2 12h20'
+              return (
+                <Reveal key={t}>
+                  <div className="flex gap-5 items-start">
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-brand/30 bg-white">
+                      <svg viewBox="0 0 24 24" className="h-5 w-5 text-brand" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={path} /></svg>
+                    </span>
+                    <div>
+                      <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand">{t}</p>
+                      <p className="mt-1 text-[14px] text-ink/75">{d}</p>
+                    </div>
                   </div>
-                </div>
-              </Reveal>
-            ))}
+                </Reveal>
+              )
+            })}
           </div>
         </div>
-        <img src="/assets/sugar-cane.jpg" alt="Sugarcane fields" className="h-56 md:h-72 w-full object-cover img-soft" />
+        <img src={B('home-ripple').image} alt="Sugarcane fields" className="h-56 md:h-72 w-full object-cover img-soft" />
       </section>
 
       {/* 4, HOW WE HELP */}
       <section className="mx-auto max-w-6xl px-6 py-20 md:py-24">
-        <SectionHead kicker="What we do" title="How we help" copy="Three complementary practices, each designed to meet you where you are, and create the conditions for recovery, alignment and momentum." />
+        <SectionHead kicker="What we do" title={B('home-help').title} copy={B('home-help').copy} />
         <div className="mt-10 grid md:grid-cols-3 gap-10">
-          {[
-            { img: '/assets/service-one.jpg', t: 'Conceptual studies', h: 'When direction is unclear', items: ['Pre-feasibility & feasibility studies', 'Detailed & bankable project reports', 'Due diligence, valuation & EIA', 'Financial viability & market studies'] },
-            { img: '/assets/service-engg.jpg', t: 'Engineering & PMC', h: 'When execution must hold', items: ['FEED, P&IDs, layouts & tendering', 'Specs, BOQs & vendor finalisation', 'Site supervision, QA/QC & billing', 'Commissioning & handover'] },
-            { img: '/assets/solar-b.jpg', t: 'Energy, audit & R&D', h: 'When performance must rise', items: ['BEE-certified energy audits', 'Steam economy below 36% on cane', 'MCU, couplings & mill upgrades', 'Troubleshooting that sticks'] },
-          ].map((b, i) => (
-            <Reveal key={b.t} delay={i * 0.08} className="text-center">
-              <CircleImg src={b.img} alt={b.t} />
-              <p className="mt-6 text-[11px] font-bold uppercase tracking-[0.24em] text-brand">{b.t}</p>
-              <h3 className="font-display mt-2 text-[1.45rem] leading-snug">{b.h}</h3>
-              <ul className="mt-4 space-y-1.5 text-[13px] text-soft">
-                {b.items.map((it) => (<li key={it}>· {it}</li>))}
-              </ul>
-            </Reveal>
-          ))}
+          {B('home-help').items.map((row, i) => {
+            const [t = '', h = '', rest = ''] = row.split(' || ')
+            const bullets = rest.split(';').map((x) => x.trim()).filter(Boolean)
+            const imgs = ['/assets/service-one.jpg', '/assets/service-engg.jpg', '/assets/solar-b.jpg']
+            return (
+              <Reveal key={t} delay={i * 0.08} className="text-center">
+                <CircleImg src={imgs[i % imgs.length]} alt={t} />
+                <p className="mt-6 text-[11px] font-bold uppercase tracking-[0.24em] text-brand">{t}</p>
+                <h3 className="font-display mt-2 text-[1.45rem] leading-snug">{h}</h3>
+                <ul className="mt-4 space-y-1.5 text-[13px] text-soft">
+                  {bullets.map((it) => (<li key={it}>· {it}</li>))}
+                </ul>
+              </Reveal>
+            )
+          })}
         </div>
         <div className="mt-12 text-center">
           <Pill to="/services">Explore offerings</Pill>
@@ -253,13 +252,13 @@ export default function Home({ onBrochure }: { onBrochure: OpenBrochure }) {
         <div className="mx-auto max-w-6xl px-6 md:px-10 py-14 md:py-16 grid md:grid-cols-2 gap-10 items-center">
           <Reveal>
             <h2 className="font-display text-3xl md:text-[2.4rem] leading-[1.15] font-medium">
-              Underperformance doesn't have to be <em>a barrier.</em>
+              {B('home-split').title} <em>{B('home-split').subtitle}</em>
             </h2>
-            <p className="mt-4 text-[14.5px] text-soft leading-relaxed">Handled well, it becomes efficiency, and a way forward.</p>
+            <p className="mt-4 text-[14.5px] text-soft leading-relaxed">{B('home-split').copy}</p>
             <div className="mt-7"><Pill to="/contact">Talk to us</Pill></div>
           </Reveal>
           <Reveal delay={0.1}>
-            <img src="/assets/img-slide-two.jpg" alt="Engineers at work" className="w-full aspect-[16/10] object-cover rounded-[2rem] img-soft" />
+            <img src={B('home-split').image} alt="Engineers at work" className="w-full aspect-[16/10] object-cover rounded-[2rem] img-soft" />
           </Reveal>
         </div>
       </section>
@@ -268,13 +267,13 @@ export default function Home({ onBrochure }: { onBrochure: OpenBrochure }) {
       <section className="relative overflow-hidden">
         <img src="/assets/about_carousel_bg.jpg" alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover opacity-[0.08] img-soft" />
         <div className="relative mx-auto max-w-3xl px-6 py-20 text-center">
-          <SectionHead center kicker="Difference" title={<>What makes JPMA <em>unique?</em></>} />
+          <SectionHead center kicker="Difference" title={<>{B('home-unique').title} <em>{B('home-unique').subtitle}</em></>} />
           <ul className="mt-6 space-y-2 text-[13.5px] text-ink/75">
-            {['Beyond vendor advice, independent consultancy, accountable end to end', 'Five decades across 500+ plants in 30+ countries', 'Patented R&D (MCU) recognised with a national innovation award', 'BEE-certified energy auditors with lab-grade instruments', 'Single owner from feasibility to handover, no gaps between vendors'].map((t) => (
+            {B('home-unique').items.map((t) => (
               <li key={t}>· {t}</li>
             ))}
           </ul>
-          <p className="mt-8 text-[11px] font-bold uppercase tracking-[0.22em] text-soft">Underperformance isn't just a disruption, it's information. Understanding it enables the efficiency needed to move ahead.</p>
+          <p className="mt-8 text-[11px] font-bold uppercase tracking-[0.22em] text-soft">{B('home-unique').copy}</p>
           <div className="mt-6"><Pill to="/about">Our story</Pill></div>
         </div>
       </section>
@@ -282,14 +281,12 @@ export default function Home({ onBrochure }: { onBrochure: OpenBrochure }) {
       {/* 7, LEADER */}
       <section className="mx-auto max-w-6xl px-6 pb-16 grid md:grid-cols-[280px_1fr] gap-10 items-center">
         <Reveal>
-          <img src="/assets/board/karandikar.jpg" alt="Mr. Shirish Karandikar" className="w-full aspect-[4/5] object-cover object-top rounded-[1.75rem] img-soft" />
+          <img src={B('home-leader').image} alt="JPMA leadership" className="w-full aspect-[4/5] object-cover object-top rounded-[1.75rem] img-soft" />
         </Reveal>
         <Reveal delay={0.1}>
-          <h2 className="font-display text-3xl md:text-[2.4rem] leading-tight">Ready to turn <em>cane into clarity?</em></h2>
+          <h2 className="font-display text-3xl md:text-[2.4rem] leading-tight">{B('home-leader').title} <em>{B('home-leader').subtitle}</em></h2>
           <p className="mt-4 text-[14px] leading-relaxed text-soft max-w-2xl">
-            JPMA works under the leadership of Chairman & Managing Director <strong className="text-ink">Mr. Shirish Karandikar</strong>,
-            with Directors Mr. T. S. Rao and Mr. D. S. Nikam, a 60+ professional team of process engineers,
-            energy auditors and site leaders, with decades of commissioning experience across four continents.
+            {B('home-leader').copy}
           </p>
           <div className="mt-6"><Pill to="/about">Learn more</Pill></div>
         </Reveal>
@@ -299,8 +296,8 @@ export default function Home({ onBrochure }: { onBrochure: OpenBrochure }) {
       <section className="mx-auto max-w-6xl px-6 pb-20 grid md:grid-cols-2 gap-10 items-center">
         <Reveal>
           <Kicker>The film</Kicker>
-          <h2 className="font-display mt-3 text-3xl md:text-[2.4rem] leading-tight">Five decades, <em>four minutes.</em></h2>
-          <p className="mt-4 max-w-md text-[14px] leading-relaxed text-soft">Plants, people and commissioning floors across India and 30+ countries. This is what concept to commissioning looks like from the inside.</p>
+          <h2 className="font-display mt-3 text-3xl md:text-[2.4rem] leading-tight">{B('home-film').title} <em>{B('home-film').subtitle}</em></h2>
+          <p className="mt-4 max-w-md text-[14px] leading-relaxed text-soft">{B('home-film').copy}</p>
           <div className="mt-6"><Pill to="/insights">More insights</Pill></div>
         </Reveal>
         <Reveal delay={0.1}>
@@ -314,13 +311,13 @@ export default function Home({ onBrochure }: { onBrochure: OpenBrochure }) {
       <section className="mx-3 md:mx-6 mb-6 overflow-hidden rounded-[2.5rem] bg-brand-deep text-white">
         <div className="mx-auto max-w-6xl px-6 md:px-10 py-14 grid md:grid-cols-3 gap-10 items-center">
           <div>
-            <Kicker><span className="text-white/60">Free resource</span></Kicker>
-            <h2 className="font-display mt-3 text-3xl leading-tight">The JPMA Company Brochure 2025</h2>
-            <p className="mt-3 text-[13.5px] text-white/65 leading-relaxed">Capabilities, project lists, certifications and contacts, in one PDF. Enter your number, any country, and download instantly.</p>
+            <Kicker><span className="text-white/60">{B('home-resource').subtitle}</span></Kicker>
+            <h2 className="font-display mt-3 text-3xl leading-tight">{B('home-resource').title}</h2>
+            <p className="mt-3 text-[13.5px] text-white/65 leading-relaxed">{B('home-resource').copy}</p>
           </div>
           <Reveal className="flex justify-center">
             <button onClick={() => onBrochure()} className="group relative block w-52 rotate-[-4deg] overflow-hidden rounded-xl bg-white p-2 shadow-2xl transition-transform hover:rotate-0">
-              <img src="/assets/business-img.jpg" alt="Brochure cover" className="h-64 w-full rounded-lg object-cover img-soft" />
+              <img src={B('home-resource').image} alt="Brochure cover" className="h-64 w-full rounded-lg object-cover img-soft" />
               <span className="absolute inset-0 flex items-center justify-center bg-brand-deep/0 group-hover:bg-brand-deep/30 transition-colors">
                 <span className="rounded-full bg-white px-5 py-2 text-[10.5px] font-bold uppercase tracking-[0.18em] text-brand opacity-0 group-hover:opacity-100 transition-opacity">Preview</span>
               </span>

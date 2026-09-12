@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { supabase, isSupabaseConfigured } from '../lib/supabase'
 import * as seed from '../data/seed'
 import { EVENT, getCollection, getSettings } from '../cms/store'
+import type { Block } from '../cms/store'
 
 export interface ContentState {
   settings: typeof seed.siteSettings
@@ -18,7 +19,15 @@ export interface ContentState {
   gallery: string[]
   jobs: { title: string; loc: string; type: string; desc: string }[]
   documents: { id: string; title: string; file_url: string; category: string }[]
+  blocks: Record<string, Block>
   source: 'supabase' | 'local'
+}
+
+const EMPTY_BLOCK: Block = { title: '', subtitle: '', copy: '', image: '', items: [] }
+
+/** Read a page-content block. Always present locally (seeded defaults); Supabase rows override. */
+export function getBlock(c: ContentState, id: string): Block {
+  return c.blocks[id] ?? EMPTY_BLOCK
 }
 
 function buildFromStore(): ContentState {
@@ -39,6 +48,17 @@ function buildFromStore(): ContentState {
   const jobs = getCollection('jobs')
   const documents = getCollection('documents')
   const settings = getSettings()
+  const blockRows = getCollection('blocks')
+  const blocks: Record<string, Block> = {}
+  blockRows.forEach((b) => {
+    blocks[String(b.id)] = {
+      title: String(b.title ?? ''),
+      subtitle: String(b.subtitle ?? ''),
+      copy: String(b.copy ?? ''),
+      image: String(b.image ?? ''),
+      items: (Array.isArray(b.items) ? b.items : String(b.items ?? '').split('\n')).map(String).filter(Boolean),
+    }
+  })
   return {
     settings: { ...seed.siteSettings, ...settings },
     stats: stats.map((s) => ({ value: num(s.value, 0), suffix: String(s.suffix ?? ''), label: String(s.label ?? ''), sub: String(s.sub ?? '') })),
@@ -54,6 +74,7 @@ function buildFromStore(): ContentState {
     gallery: gallery.map((g) => String(g.url ?? '')),
     jobs: jobs.map((j) => ({ title: String(j.title ?? ''), loc: String(j.loc ?? ''), type: String(j.type ?? ''), desc: String(j.desc ?? '') })),
     documents: documents.map((d) => ({ id: String(d.id), title: String(d.title ?? ''), file_url: String(d.file_url ?? ''), category: String(d.category ?? '') })),
+    blocks,
     source: 'local',
   }
 }
@@ -84,10 +105,10 @@ export function useContent() {
           const { data } = await sb.from(table).select('*')
           return data as any[] | null
         }
-        const [settings, stats, slides, areas, services, products, dProj, iProj, timeline, team, news, gallery, documents, jobs] = await Promise.all([
+        const [settings, stats, slides, areas, services, products, dProj, iProj, timeline, team, news, gallery, documents, jobs, blocks] = await Promise.all([
           get('site_settings'), get('stats'), get('hero_slides'), get('business_areas'),
           get('services'), get('products'), get('projects_domestic'), get('projects_international'),
-          get('timeline'), get('team'), get('news'), get('gallery'), get('documents'), get('jobs'),
+          get('timeline'), get('team'), get('news'), get('gallery'), get('documents'), get('jobs'), get('content_blocks'),
         ])
         if (settings?.[0]) next.settings = { ...next.settings, ...settings[0].data }
         if (stats?.length) next.stats = stats.sort((a, b) => a.sort_order - b.sort_order).map((r) => r.data)
@@ -103,6 +124,20 @@ export function useContent() {
         if (gallery?.length) next.gallery = gallery.map((r) => r.image_url)
         if (documents?.length) next.documents = documents.map((r) => ({ id: r.id, title: r.title, file_url: r.file_url, category: r.category }))
         if (jobs?.length) next.jobs = jobs.sort((a, b) => a.sort_order - b.sort_order).map((r) => r.data)
+        if (blocks?.length) {
+          blocks.forEach((r: any) => {
+            const bid = String(r.block_id ?? r.data?.id ?? '')
+            if (!bid) return
+            const d = r.data ?? r
+            next.blocks[bid] = {
+              title: String(d.title ?? next.blocks[bid]?.title ?? ''),
+              subtitle: String(d.subtitle ?? next.blocks[bid]?.subtitle ?? ''),
+              copy: String(d.copy ?? next.blocks[bid]?.copy ?? ''),
+              image: String(d.image ?? next.blocks[bid]?.image ?? ''),
+              items: Array.isArray(d.items) ? d.items.map(String) : (next.blocks[bid]?.items ?? []),
+            }
+          })
+        }
         setContent(next)
       } catch {
         setContent(local)

@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom'
-import { siteSettings } from '../data/seed'
+import { useContent } from '../hooks/useContent'
 
 export default function Footer() {
+  const c = useContent()
+  const siteSettings = c.settings
   return (
     <footer className="bg-paper">
       <div className="mx-auto max-w-6xl px-6 pt-14 pb-8">
@@ -9,8 +11,7 @@ export default function Footer() {
           <div>
             <img src="/assets/jpma-logo-blue.png" alt="JPMA" className="h-10 w-auto" />
             <p className="mt-4 max-w-xs text-[12.5px] leading-relaxed text-soft">
-              India's first end-to-end sugar industry consultancy, concept to commissioning
-              across 30+ countries since 1972.
+              {(siteSettings as any).footerAbout || "India's first end-to-end sugar industry consultancy, concept to commissioning across 30+ countries since 1972."}
             </p>
           </div>
           <div>

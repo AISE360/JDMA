@@ -1,13 +1,14 @@
-import { useContent } from '../hooks/useContent'
+import { useContent, getBlock } from '../hooks/useContent'
 import { Kicker, Pill, Reveal, SectionHead, useHashScroll } from '../components/ui'
 import { PageHero } from './About'
 
 export default function Services() {
   const c = useContent()
+  const hb = getBlock(c, 'hero-services')
   useHashScroll()
   return (
     <div>
-      <PageHero eyebrow="Services" title="One-stop engineering & consulting." copy="Studies that de-risk decisions · engineering vendors can build · supervision that protects time, cost and quality." />
+      <PageHero eyebrow={hb.subtitle} title={hb.title} copy={hb.copy} />
       <div className="mx-auto max-w-6xl px-6 py-14 space-y-12">
         {c.services.map((s, i) => (
           <div key={s.slug} id={s.slug} className="grid md:grid-cols-[240px_1fr] gap-8 scroll-mt-28 border-b border-ink/10 pb-12 last:border-0">

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { saveLead, useContent } from '../hooks/useContent'
+import { saveLead, useContent, getBlock } from '../hooks/useContent'
 import { Kicker, Reveal } from '../components/ui'
 import { PageHero } from './About'
 
@@ -7,6 +7,8 @@ const inp = 'w-full rounded-xl border border-ink/15 bg-white px-4 py-3 text-sm o
 
 export default function Careers() {
   const c = useContent()
+  const hb = getBlock(c, 'hero-careers')
+  const note = getBlock(c, 'careers-note')
   const roles = c.jobs.length ? c.jobs : []
   const [f, setF] = useState({ name: '', email: '', role: '', note: '' })
   const [status, setStatus] = useState('')
@@ -21,7 +23,7 @@ export default function Careers() {
   }
   return (
     <div>
-      <PageHero eyebrow="Careers" title="Do the sweetest engineering of your career." copy="60+ professionals · BEE auditors · site leaders · design engineers. Pune home-office with India & international site exposure." />
+      <PageHero eyebrow={hb.subtitle} title={hb.title} copy={hb.copy} />
       <section className="mx-auto max-w-6xl px-6 py-12 grid lg:grid-cols-5 gap-10">
         <div className="lg:col-span-3 space-y-8">
           {roles.map((r, i) => (
@@ -34,7 +36,7 @@ export default function Careers() {
               </div>
             </Reveal>
           ))}
-          <p className="text-[13px] text-soft">General applications welcome, mention your discipline (process / mechanical / electrical / civil) in the note.</p>
+          <p className="text-[13px] text-soft">{note.copy}</p>
         </div>
         <Reveal delay={0.1} className="lg:col-span-2">
           <form onSubmit={submit} className="rounded-[1.75rem] bg-mist p-7 space-y-3 lg:sticky lg:top-24">

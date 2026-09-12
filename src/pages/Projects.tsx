@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { useContent } from '../hooks/useContent'
+import { useContent, getBlock } from '../hooks/useContent'
 import { Kicker, Pill, Reveal, SectionHead } from '../components/ui'
 import { PageHero } from './About'
 
@@ -38,9 +38,11 @@ export default function Projects() {
     ...c.domesticProjects.map((p) => ({ ...p, kind: 'Domestic' as const })),
   ]
   const list = tab === 'all' ? all : all.filter((p) => p.kind.toLowerCase() === tab)
+  const hb = getBlock(c, 'hero-projects')
+  const recent = getBlock(c, 'projects-recent')
   return (
     <div>
-      <PageHero eyebrow="Projects" title="A sweet presence, worldwide." copy="500+ assignments across India and 30+ countries, sugar, refinery, cogeneration, distillery and agriculture." />
+      <PageHero eyebrow={hb.subtitle} title={hb.title} copy={hb.copy} />
       <div className="mx-auto max-w-6xl px-6 pt-10">
         <Reveal>
           <img src="/assets/banner-inter-domestic.jpg" alt="JPMA projects across India and the world" className="h-60 md:h-80 w-full object-cover rounded-[2rem] img-soft" />
@@ -84,7 +86,7 @@ export default function Projects() {
           ))}
         </div>
         <div className="mt-12 rounded-[2rem] bg-mist p-8 md:p-10 text-center">
-          <SectionHead center kicker="Recently completed" title="Ethanol, sugar & cogen, delivered in the last year." copy="500 KLPD grain ethanol feasibility · 10–100 KLPD juice ethanol DPRs · cassava ethanol · 150–400 KLPD dual-feed DPRs, conversions & audits · 3,500 TCD greenfield PMC · 6,000–10,000 TCD expansions." />
+          <SectionHead center kicker={recent.subtitle} title={recent.title} copy={recent.copy} />
           <div className="mt-6"><Pill to="/contact">Discuss your project</Pill></div>
         </div>
       </div>

@@ -1,14 +1,17 @@
-import { useContent } from '../hooks/useContent'
+import { useContent, getBlock } from '../hooks/useContent'
 import { CheckList, Kicker, Pill, Reveal, SectionHead, useHashScroll } from '../components/ui'
 import type { OpenBrochure } from '../components/BrochureModal'
 import { PageHero } from './About'
 
 export default function Expertise({ onBrochure }: { onBrochure: OpenBrochure }) {
   const c = useContent()
+  const B = (id: string) => getBlock(c, id)
+  const hb = B('hero-expertise')
+  const cta = B('expertise-cta')
   useHashScroll()
   return (
     <div>
-      <PageHero eyebrow="Expertise · Business areas" title="Anything and everything in sugar." copy="Four decades of concept-to-commissioning across sugar, refinery, cogeneration, ethanol, agriculture and special studies." />
+      <PageHero eyebrow={hb.subtitle} title={hb.title} copy={hb.copy} />
       <div className="mx-auto max-w-6xl px-6 py-14 space-y-12">
         {c.businessAreas.map((b, i) => (
           <div key={b.slug} id={b.slug} className="grid md:grid-cols-2 gap-8 items-center scroll-mt-28">
@@ -27,8 +30,8 @@ export default function Expertise({ onBrochure }: { onBrochure: OpenBrochure }) 
       <section className="mx-3 md:mx-6 mb-6 rounded-[2.5rem] bg-brand-deep text-white">
         <div className="mx-auto max-w-6xl px-6 py-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div>
-            <p className="text-[10.5px] font-bold uppercase tracking-[0.24em] text-white/60">Capability proof</p>
-            <h2 className="font-display mt-2 text-3xl">Get the full capability statement.</h2>
+            <p className="text-[10.5px] font-bold uppercase tracking-[0.24em] text-white/60">{cta.subtitle}</p>
+            <h2 className="font-display mt-2 text-3xl">{cta.title}</h2>
           </div>
           <button onClick={() => onBrochure()} className="shrink-0 rounded-full bg-white px-8 py-3.5 text-[11px] font-bold uppercase tracking-[0.2em] text-brand hover:bg-mist transition-colors">Download brochure</button>
         </div>
