@@ -118,5 +118,16 @@ body {
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 /* site-wide: industrial headings + readable legacy cards */
-main h1, main h2 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.01em; line-height: 0.92; }
+main h1, main h2 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: 0.01em; line-height: 0.92; overflow-wrap: anywhere; word-break: normal; max-width: 100%; }
 main .bg-white { color: #0b1a33; }
+
+/* responsive stability: no layout shift across screen sizes */
+section, header, footer, main { min-width: 0; }
+.grid { min-width: 0; }
+[class*="grid-cols"] > * { min-width: 0; }
+/* keep clipped corners from creating sub-pixel horizontal scroll on small screens */
+.cut, .cut-btn, .cut-sm, .cut-lg, .cut-card { max-width: 100%; }
+/* fluid media never forces overflow */
+img, video, svg, canvas { max-width: 100%; }
+img { height: auto; }
+section .absolute.inset-0.h-full img, section .absolute.inset-0 img { height: 100%; }

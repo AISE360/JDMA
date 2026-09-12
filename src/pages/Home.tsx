@@ -32,11 +32,11 @@ function ClientsWall() {
 
 function StatItem({ icon, value, label }: { icon: React.ReactNode; value: string; label: string }) {
   return (
-    <div className="flex items-center gap-4 px-6 md:px-9 py-[22px] border-b lg:border-b-0 lg:border-r border-navy/10 last:border-0 min-w-0">
+    <div className="flex items-center gap-4 px-5 md:px-9 py-[20px] md:py-[22px] border-b xl:border-b-0 xl:border-r border-navy/10 last:border-0 min-w-0 overflow-hidden">
       <span className="flex h-11 w-11 shrink-0 items-center justify-center bg-[#0e2a5e] text-white">{icon}</span>
       <span className="min-w-0">
-        <span className="block font-display text-[34px] md:text-[38px] font-semibold text-ink leading-none whitespace-nowrap">{value}</span>
-        <span className="mt-[5px] block font-mono text-[9.5px] uppercase tracking-[0.18em] text-soft">{label}</span>
+        <span className="block font-display text-[28px] md:text-[38px] font-semibold text-ink leading-none break-words">{value}</span>
+        <span className="mt-[5px] block font-mono text-[9.5px] uppercase tracking-[0.18em] text-soft leading-snug">{label}</span>
       </span>
     </div>
   )
@@ -44,7 +44,7 @@ function StatItem({ icon, value, label }: { icon: React.ReactNode; value: string
 
 function ServiceImageCard({ img, title, to }: { img: string; title: string; to: string }) {
   return (
-    <Link to={to} className="cut-card group relative block overflow-hidden bg-navydeep h-[300px] lg:h-[330px]">
+    <Link to={to} className="cut-card group relative block w-full min-w-0 overflow-hidden bg-navydeep h-[280px] sm:h-[300px] xl:h-[320px] 2xl:h-[330px]">
       <img src={img} alt={title} className="absolute inset-0 h-full w-full object-cover img-industrial opacity-90 group-hover:scale-105 transition-transform duration-700" />
       <span className="absolute inset-0 bg-gradient-to-t from-[#081a3a] via-[#081a3a]/30 to-transparent" />
       <span className="absolute inset-x-0 bottom-0 p-6">
@@ -61,16 +61,16 @@ export default function Home({ onBrochure }: { onBrochure: OpenBrochure }) {
   return (
     <div className="w-full bg-white text-ink overflow-x-clip">
       {/* ---------- HERO ---------- */}
-      <section className="w-full">
-        <div className="grid w-full lg:grid-cols-[minmax(350px,27%)_1fr_minmax(270px,21%)] lg:h-[600px] xl:h-[640px] border-b border-navy/10">
+      <section className="w-full overflow-hidden">
+        <div className="grid w-full grid-cols-1 lg:grid-cols-[minmax(0,30%)_minmax(0,1fr)_minmax(0,26%)] xl:grid-cols-[minmax(0,27%)_minmax(0,1fr)_minmax(0,21%)] lg:min-h-[560px] xl:min-h-[600px] 2xl:min-h-[640px] border-b border-navy/10">
           {/* left copy */}
-          <div className="blueprint relative px-7 md:px-10 pt-9 pb-7 flex flex-col bg-white min-w-0">
-            <p className="flex items-center gap-4 font-mono text-[9.5px] uppercase tracking-[0.24em] text-soft">
-              <span className="h-px w-10 bg-navy/25" />
-              Engineering&nbsp;&nbsp;&nbsp;People&nbsp;&nbsp;&nbsp;Progress
+          <div className="blueprint relative px-6 md:px-8 xl:px-10 pt-8 md:pt-9 pb-7 flex flex-col bg-white min-w-0 overflow-hidden">
+            <p className="flex min-w-0 items-center gap-3 md:gap-4 font-mono text-[8.5px] md:text-[9.5px] uppercase tracking-[0.18em] md:tracking-[0.24em] text-soft">
+              <span className="h-px w-8 md:w-10 shrink-0 bg-navy/25" />
+              <span className="min-w-0 truncate">Engineering&nbsp;&nbsp;&nbsp;People&nbsp;&nbsp;&nbsp;Progress</span>
               <span className="h-px flex-1 bg-navy/10" />
             </p>
-            <h1 className="mt-7 font-display font-semibold text-[clamp(2.7rem,4.4vw,4.6rem)] leading-[0.96]">
+            <h1 className="mt-6 md:mt-7 font-display font-semibold text-[clamp(2rem,1.35rem+2.6vw,4.3rem)] leading-[0.98] break-words [overflow-wrap:anywhere]">
               <span className="block text-[#101418]">Building with precision.</span>
               <span className="block text-brand">Delivering with confidence.</span>
             </h1>
@@ -85,29 +85,29 @@ export default function Home({ onBrochure }: { onBrochure: OpenBrochure }) {
                 Contact us&nbsp;&nbsp;→
               </Link>
             </div>
-            <p className="mt-auto pt-10 flex items-center gap-4 font-mono text-[9.5px] uppercase tracking-[0.2em] text-soft">
-              <span className="h-px w-10 bg-navy/40" />
-              People <span className="text-brand font-bold">|</span> Process <span className="text-brand font-bold">|</span> <span className="text-navy font-bold">Performance</span>
+            <p className="mt-auto pt-8 md:pt-10 flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[9.5px] uppercase tracking-[0.2em] text-soft">
+              <span className="h-px w-10 shrink-0 bg-navy/40" />
+              <span className="min-w-0">People <span className="text-brand font-bold">|</span> Process <span className="text-brand font-bold">|</span> <span className="text-navy font-bold">Performance</span></span>
             </p>
           </div>
 
           {/* center image */}
-          <div className="relative min-h-[320px] lg:min-h-0 min-w-0">
+          <div className="relative min-h-[280px] sm:min-h-[340px] lg:min-h-[560px] xl:min-h-[600px] min-w-0 overflow-hidden">
             <img src={HERO_IMG} alt="Sugar and cogeneration plant" className="absolute inset-0 h-full w-full object-cover" />
             <div className="absolute inset-0 blueprint" />
             {/* crosshair survey mark */}
-            <span className="absolute font-mono text-[22px] font-light text-[#0e2a5e]" style={{ left: '30%', top: '21%' }}>+</span>
-            <span className="absolute w-px bg-[#0e2a5e]/50" style={{ left: 'calc(30% + 10px)', top: '21%', height: '88px' }} />
-            <span className="absolute h-px bg-[#0e2a5e]/50" style={{ left: '30%', top: 'calc(21% + 44px)', width: '120px' }} />
-            {/* navy diagonal wedge */}
-            <svg className="absolute inset-0 h-full w-full hidden md:block" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <span className="absolute font-mono text-[22px] font-light text-[#0e2a5e] hidden sm:block" style={{ left: '30%', top: '21%' }}>+</span>
+            <span className="absolute w-px bg-[#0e2a5e]/50 hidden sm:block" style={{ left: 'calc(30% + 10px)', top: '21%', height: '88px' }} />
+            <span className="absolute h-px bg-[#0e2a5e]/50 hidden sm:block" style={{ left: '30%', top: 'calc(21% + 44px)', width: '120px' }} />
+            {/* navy diagonal wedge — only in 3-col desktop layout so stacked tablets never shift */}
+            <svg className="absolute inset-0 h-full w-full hidden lg:block" viewBox="0 0 100 100" preserveAspectRatio="none">
               <polygon points="100,0 55,100 100,100" fill="#123a7d" opacity="0.94" />
               <line x1="100" y1="0" x2="55" y2="100" stroke="rgba(255,255,255,0.4)" strokeWidth="0.25" />
             </svg>
           </div>
 
           {/* right operating panel */}
-          <div className="blueprint-blue relative bg-[#123a7d] px-7 md:px-8 pt-8 pb-7 text-white flex flex-col min-w-0">
+          <div className="blueprint-blue relative bg-[#123a7d] px-6 md:px-8 pt-7 md:pt-8 pb-7 text-white flex flex-col min-w-0 overflow-hidden">
             <p className="font-mono text-[9.5px] uppercase tracking-[0.24em] text-white/70">Operating system</p>
             <p className="mt-5 font-mono text-[11px] leading-[1.8] text-white/85">
               Every project runs on one operating system — shared schedules, shared accountability, shared standards. So clients build, authorities stay informed and works all stay at the same level of precision.
@@ -129,13 +129,13 @@ export default function Home({ onBrochure }: { onBrochure: OpenBrochure }) {
       </section>
 
       {/* ---------- STATS STRIP ---------- */}
-      <section className="w-full bg-white border-b border-navy/10">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_1fr_1.15fr]">
+      <section className="w-full bg-white border-b border-navy/10 overflow-hidden">
+        <div className="grid sm:grid-cols-2 xl:grid-cols-[1fr_1fr_1fr_1fr_1.15fr]">
           <StatItem value="54" label="Years of practice" icon={<svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.7"><path d="M3 21h18M5 21V10l4-2v13M11 21V4l5 2v15M16 21v-6h3v6" /></svg>} />
           <StatItem value="30+" label="Countries served" icon={<svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="8.5" /><path d="M3.5 12h17M12 3.5c3.2 3.2 3.2 13.8 0 17M12 3.5c-3.2 3.2-3.2 13.8 0 17M5.5 6.5c3 2 9 2 13 0M5.5 17.5c3-2 9-2 13 0" /></svg>} />
           <StatItem value="500+" label="Projects delivered" icon={<svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="3.2" /><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.2 5.2l2.1 2.1M16.7 16.7l2.1 2.1M18.8 5.2l-2.1 2.1M7.3 16.7l-2.1 2.1" /></svg>} />
           <StatItem value="1000 MW" label="Cogeneration advised" icon={<svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.7"><path d="M13 2.5 4.5 13.5H11l-1.5 8 8.5-11H12l1-8z" /></svg>} />
-          <div className="hidden lg:flex items-center gap-4 px-9 py-[22px]">
+          <div className="hidden xl:flex items-center gap-4 px-9 py-[22px] min-w-0">
             <span className="h-px w-12 bg-navy/40 shrink-0" />
             <p className="font-mono text-[9.5px] uppercase leading-[1.9] tracking-[0.2em] text-soft">Trusted partners<br />in industrial growth.</p>
           </div>
@@ -143,15 +143,15 @@ export default function Home({ onBrochure }: { onBrochure: OpenBrochure }) {
       </section>
 
       {/* ---------- SERVICES + APPROACH ---------- */}
-      <section className="w-full bg-[#edf0f4] p-2">
-        <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-[1fr_1fr_1fr_1fr_350px]">
+      <section className="w-full bg-[#edf0f4] p-2 overflow-hidden">
+        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-[1fr_1fr_1fr_1fr_350px]">
           <Reveal><ServiceImageCard img="/assets/img-slide-two.jpg" title="Sugar plant engineering" to="/expertise" /></Reveal>
           <Reveal delay={0.05}><ServiceImageCard img="/assets/service-engg.jpg" title="Cogeneration & power" to="/services" /></Reveal>
           <Reveal delay={0.1}><ServiceImageCard img="/assets/img-slide-three.jpg" title="Infrastructure development" to="/expertise" /></Reveal>
           <Reveal delay={0.15}><ServiceImageCard img="/assets/r-and-d.jpg" title="Project management" to="/services" /></Reveal>
-          <div className="blueprint bg-white px-7 py-8 flex flex-col min-w-0">
-            <p className="flex items-center gap-4 font-mono text-[9.5px] uppercase tracking-[0.2em] text-soft"><span className="h-px w-10 bg-navy/30" /> Our approach</p>
-            <h2 className="mt-5 font-display font-semibold text-[26px] leading-[1.02] text-[#101418]">Construction expertise backed by experience.</h2>
+          <div className="blueprint bg-white px-6 md:px-7 py-8 flex flex-col min-w-0 sm:col-span-2 lg:col-span-2 2xl:col-span-1 overflow-hidden">
+            <p className="flex items-center gap-4 font-mono text-[9.5px] uppercase tracking-[0.2em] text-soft"><span className="h-px w-10 shrink-0 bg-navy/30" /> Our approach</p>
+            <h2 className="mt-5 font-display font-semibold text-[clamp(1.4rem,1.1rem+1.2vw,1.625rem)] leading-[1.05] text-[#101418] break-words">Construction expertise backed by experience.</h2>
             <p className="mt-4 font-mono text-[10.5px] leading-[1.8] text-soft">
               J.P. Mukherji & Associates partners with developers, businesses and public organizations to deliver projects that meet the highest standards of quality, safety and performance.
             </p>
