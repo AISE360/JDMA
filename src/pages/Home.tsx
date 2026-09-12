@@ -5,13 +5,38 @@ import type { OpenBrochure } from '../components/BrochureModal'
 
 const HERO_IMG = '/assets/slider-one.jpg'
 
+const CLIENT_LOGOS = Array.from({ length: 39 }, (_, i) => `/assets/clients/${i + 1}.png`)
+const CLIENT_LOGOS_2 = Array.from({ length: 59 }, (_, i) => i + 1)
+  .filter((n) => n !== 36)
+  .map((n) => `/assets/clients/logo${n}.jpg`)
+const ALL_LOGOS = [...CLIENT_LOGOS, ...CLIENT_LOGOS_2]
+
+function ClientsWall() {
+  const row = [...ALL_LOGOS, ...ALL_LOGOS]
+  return (
+    <div className="clients-wall overflow-hidden">
+      <div className="flex w-max animate-clients items-center gap-12 md:gap-16 px-6">
+        {row.map((src, i) => (
+          <img
+            key={i}
+            src={src}
+            alt={`Client ${(i % ALL_LOGOS.length) + 1}`}
+            loading="lazy"
+            className="h-11 md:h-14 w-auto max-w-[170px] object-contain opacity-60 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function StatItem({ icon, value, label }: { icon: React.ReactNode; value: string; label: string }) {
   return (
-    <div className="flex items-center gap-4 px-5 md:px-8 py-5 border-b lg:border-b-0 lg:border-r border-navy/10 last:border-0 min-w-0">
-      <span className="flex h-11 w-11 shrink-0 items-center justify-center bg-navy text-white">{icon}</span>
+    <div className="flex items-center gap-4 px-6 md:px-9 py-[22px] border-b lg:border-b-0 lg:border-r border-navy/10 last:border-0 min-w-0">
+      <span className="flex h-11 w-11 shrink-0 items-center justify-center bg-[#0e2a5e] text-white">{icon}</span>
       <span className="min-w-0">
-        <span className="block font-display text-3xl md:text-4xl text-ink leading-none whitespace-nowrap">{value}</span>
-        <span className="mt-1 block font-mono text-[10px] uppercase tracking-[0.16em] text-soft">{label}</span>
+        <span className="block font-display text-[34px] md:text-[38px] font-semibold text-ink leading-none whitespace-nowrap">{value}</span>
+        <span className="mt-[5px] block font-mono text-[9.5px] uppercase tracking-[0.18em] text-soft">{label}</span>
       </span>
     </div>
   )
@@ -19,12 +44,12 @@ function StatItem({ icon, value, label }: { icon: React.ReactNode; value: string
 
 function ServiceImageCard({ img, title, to }: { img: string; title: string; to: string }) {
   return (
-    <Link to={to} className="cut-card group relative block overflow-hidden bg-navydeep min-h-[300px] lg:min-h-[360px]">
+    <Link to={to} className="cut-card group relative block overflow-hidden bg-navydeep h-[300px] lg:h-[330px]">
       <img src={img} alt={title} className="absolute inset-0 h-full w-full object-cover img-industrial opacity-90 group-hover:scale-105 transition-transform duration-700" />
-      <span className="absolute inset-0 bg-gradient-to-t from-navydeep via-navydeep/35 to-transparent" />
-      <span className="absolute inset-x-0 bottom-0 p-5">
-        <span className="block font-display text-xl leading-[0.95] text-white max-w-[12ch]">{title}</span>
-        <span className="mt-4 block font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-white/80 group-hover:text-white">Learn more →</span>
+      <span className="absolute inset-0 bg-gradient-to-t from-[#081a3a] via-[#081a3a]/30 to-transparent" />
+      <span className="absolute inset-x-0 bottom-0 p-6">
+        <span className="block font-display text-[21px] font-semibold leading-[1.02] text-white max-w-[13ch]">{title}</span>
+        <span className="mt-5 block font-mono text-[9.5px] font-bold uppercase tracking-[0.2em] text-white/75 group-hover:text-white">Learn more&nbsp;&nbsp;→</span>
       </span>
     </Link>
   )
@@ -35,127 +60,153 @@ export default function Home({ onBrochure }: { onBrochure: OpenBrochure }) {
 
   return (
     <div className="w-full bg-white text-ink overflow-x-clip">
-      {/* ---------- HERO: full-bleed 3 columns ---------- */}
+      {/* ---------- HERO ---------- */}
       <section className="w-full">
-        <div className="grid w-full lg:grid-cols-[minmax(340px,430px)_1fr_minmax(260px,330px)] border-b border-navy/10">
+        <div className="grid w-full lg:grid-cols-[minmax(350px,27%)_1fr_minmax(270px,21%)] lg:h-[600px] xl:h-[640px] border-b border-navy/10">
           {/* left copy */}
-          <div className="blueprint relative p-6 md:p-10 flex flex-col bg-white min-w-0">
-            <p className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.22em] text-soft">
-              <span className="h-px w-8 bg-navy/30" /> Engineering&nbsp;&nbsp;People&nbsp;&nbsp;Progress
+          <div className="blueprint relative px-7 md:px-10 pt-9 pb-7 flex flex-col bg-white min-w-0">
+            <p className="flex items-center gap-4 font-mono text-[9.5px] uppercase tracking-[0.24em] text-soft">
+              <span className="h-px w-10 bg-navy/25" />
+              Engineering&nbsp;&nbsp;&nbsp;People&nbsp;&nbsp;&nbsp;Progress
+              <span className="h-px flex-1 bg-navy/10" />
             </p>
-            <h1 className="mt-5 font-display text-[clamp(2.6rem,4.2vw,4.4rem)]">
-              <span className="block text-ink">Building with precision.</span>
+            <h1 className="mt-7 font-display font-semibold text-[clamp(2.7rem,4.4vw,4.6rem)] leading-[0.96]">
+              <span className="block text-[#101418]">Building with precision.</span>
               <span className="block text-brand">Delivering with confidence.</span>
             </h1>
-            <p className="mt-5 max-w-[42ch] font-mono text-[11.5px] leading-relaxed text-soft">
+            <p className="mt-6 max-w-[44ch] font-mono text-[11px] leading-[1.75] text-soft">
               From sugar plants to large-scale cogeneration, J.P. Mukherji & Associates brings expertise, accountability and execution to every project.
             </p>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <button onClick={() => onBrochure()} className="cut-sm bg-brand px-7 py-3 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-white hover:bg-navy">
-                Our brochure →
+            <div className="mt-8 flex flex-wrap gap-3">
+              <button onClick={() => onBrochure()} className="cut-btn bg-brand pl-7 pr-8 py-[13px] font-mono text-[10.5px] font-bold uppercase tracking-[0.12em] text-white hover:bg-navy">
+                Our brochure&nbsp;&nbsp;→
               </button>
-              <Link to="/contact" className="cut-sm border border-navy/40 px-7 py-3 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-navy hover:bg-navy hover:text-white">
-                Contact us →
+              <Link to="/contact" className="cut-btn border border-navy/45 pl-7 pr-8 py-[12px] font-mono text-[10.5px] font-bold uppercase tracking-[0.12em] text-navy hover:bg-navy hover:text-white">
+                Contact us&nbsp;&nbsp;→
               </Link>
             </div>
-            <p className="mt-auto pt-10 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.18em] text-soft">
-              <span className="h-px w-8 bg-navy/40" /> People <span className="text-brand">|</span> Process <span className="text-brand">|</span> Performance
+            <p className="mt-auto pt-10 flex items-center gap-4 font-mono text-[9.5px] uppercase tracking-[0.2em] text-soft">
+              <span className="h-px w-10 bg-navy/40" />
+              People <span className="text-brand font-bold">|</span> Process <span className="text-brand font-bold">|</span> <span className="text-navy font-bold">Performance</span>
             </p>
           </div>
 
           {/* center image */}
-          <div className="relative min-h-[320px] lg:min-h-[600px] min-w-0">
+          <div className="relative min-h-[320px] lg:min-h-0 min-w-0">
             <img src={HERO_IMG} alt="Sugar and cogeneration plant" className="absolute inset-0 h-full w-full object-cover" />
             <div className="absolute inset-0 blueprint" />
-            <span className="absolute left-[18%] top-[24%] font-mono text-xl text-navy">+</span>
-            <span className="absolute left-[18%] top-[24%] mt-4 h-20 w-px bg-navy/40" />
-            <span className="absolute left-[18%] top-[24%] ml-4 mt-2 h-px w-28 bg-navy/40" />
-            <svg className="absolute inset-y-0 right-0 h-full w-[30%] hidden md:block" viewBox="0 0 100 100" preserveAspectRatio="none">
-              <polygon points="100,0 0,100 100,100" fill="#0e2a5e" opacity="0.9" />
+            {/* crosshair survey mark */}
+            <span className="absolute font-mono text-[22px] font-light text-[#0e2a5e]" style={{ left: '30%', top: '21%' }}>+</span>
+            <span className="absolute w-px bg-[#0e2a5e]/50" style={{ left: 'calc(30% + 10px)', top: '21%', height: '88px' }} />
+            <span className="absolute h-px bg-[#0e2a5e]/50" style={{ left: '30%', top: 'calc(21% + 44px)', width: '120px' }} />
+            {/* navy diagonal wedge */}
+            <svg className="absolute inset-0 h-full w-full hidden md:block" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <polygon points="100,0 55,100 100,100" fill="#123a7d" opacity="0.94" />
+              <line x1="100" y1="0" x2="55" y2="100" stroke="rgba(255,255,255,0.4)" strokeWidth="0.25" />
             </svg>
           </div>
 
           {/* right operating panel */}
-          <div className="blueprint-blue relative bg-navy p-6 md:p-8 text-white flex flex-col min-w-0">
-            <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/70">Operating system</p>
-            <p className="mt-4 font-mono text-[11.5px] leading-relaxed text-white/85">
+          <div className="blueprint-blue relative bg-[#123a7d] px-7 md:px-8 pt-8 pb-7 text-white flex flex-col min-w-0">
+            <p className="font-mono text-[9.5px] uppercase tracking-[0.24em] text-white/70">Operating system</p>
+            <p className="mt-5 font-mono text-[11px] leading-[1.8] text-white/85">
               Every project runs on one operating system — shared schedules, shared accountability, shared standards. So clients build, authorities stay informed and works all stay at the same level of precision.
             </p>
-            <p className="mt-8 font-mono text-[11px] uppercase leading-loose tracking-[0.2em] text-white/80">
+            <div className="my-7 h-px w-10 bg-white/35" />
+            <p className="font-mono text-[11px] uppercase leading-[2.1] tracking-[0.22em] text-white/85">
               Plan<br />Engineer<br />Execute<br />Sustain
             </p>
-            <p className="mt-auto pt-10 text-right font-mono text-[11px] uppercase leading-relaxed tracking-[0.2em] text-white/80">
-              We build<br />a stronger<br />tomorrow
-            </p>
+            <div className="mt-auto pt-8">
+              <svg className="ml-auto block w-[130px]" viewBox="0 0 130 22" fill="none">
+                <polyline points="0,21 88,21 108,1" stroke="rgba(255,255,255,0.45)" strokeWidth="1" />
+              </svg>
+              <p className="mt-2 text-right font-mono text-[10.5px] uppercase leading-[1.8] tracking-[0.22em] text-white/85">
+                We build<br />a stronger<br />tomorrow
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ---------- STATS STRIP: full-bleed ---------- */}
+      {/* ---------- STATS STRIP ---------- */}
       <section className="w-full bg-white border-b border-navy/10">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_1fr_1.1fr]">
-          <StatItem value="54" label="Years of practice" icon={<svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M4 20V10h3v10M10 20V4h3v16M16 20v-7h3v7M2 20h20" /></svg>} />
-          <StatItem value="30+" label="Countries served" icon={<svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="12" cy="12" r="8" /><path d="M4 12h16M12 4c3 3 3 13 0 16M12 4c-3 3-3 13 0 16" /></svg>} />
-          <StatItem value="500+" label="Projects delivered" icon={<svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6"><circle cx="12" cy="12" r="3" /><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2" /></svg>} />
-          <StatItem value="1000 MW" label="Cogeneration advised" icon={<svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z" /></svg>} />
-          <div className="hidden lg:flex items-center gap-3 px-8 py-5">
-            <span className="h-px w-10 bg-navy/40 shrink-0" />
-            <p className="font-mono text-[10px] uppercase leading-relaxed tracking-[0.18em] text-soft">Trusted partners<br />in industrial growth.</p>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_1fr_1.15fr]">
+          <StatItem value="54" label="Years of practice" icon={<svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.7"><path d="M3 21h18M5 21V10l4-2v13M11 21V4l5 2v15M16 21v-6h3v6" /></svg>} />
+          <StatItem value="30+" label="Countries served" icon={<svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="8.5" /><path d="M3.5 12h17M12 3.5c3.2 3.2 3.2 13.8 0 17M12 3.5c-3.2 3.2-3.2 13.8 0 17M5.5 6.5c3 2 9 2 13 0M5.5 17.5c3-2 9-2 13 0" /></svg>} />
+          <StatItem value="500+" label="Projects delivered" icon={<svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="3.2" /><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.2 5.2l2.1 2.1M16.7 16.7l2.1 2.1M18.8 5.2l-2.1 2.1M7.3 16.7l-2.1 2.1" /></svg>} />
+          <StatItem value="1000 MW" label="Cogeneration advised" icon={<svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.7"><path d="M13 2.5 4.5 13.5H11l-1.5 8 8.5-11H12l1-8z" /></svg>} />
+          <div className="hidden lg:flex items-center gap-4 px-9 py-[22px]">
+            <span className="h-px w-12 bg-navy/40 shrink-0" />
+            <p className="font-mono text-[9.5px] uppercase leading-[1.9] tracking-[0.2em] text-soft">Trusted partners<br />in industrial growth.</p>
           </div>
         </div>
       </section>
 
-      {/* ---------- SERVICES + APPROACH: full-bleed ---------- */}
-      <section className="w-full">
-        <div className="grid gap-px bg-navy/10 sm:grid-cols-2 xl:grid-cols-[1fr_1fr_1fr_1fr_360px] border-b border-navy/10">
-          <Reveal className="bg-white"><ServiceImageCard img="/assets/img-slide-two.jpg" title="Sugar plant engineering" to="/expertise" /></Reveal>
-          <Reveal delay={0.05} className="bg-white"><ServiceImageCard img="/assets/service-engg.jpg" title="Cogeneration & power" to="/services" /></Reveal>
-          <Reveal delay={0.1} className="bg-white"><ServiceImageCard img="/assets/img-slide-three.jpg" title="Infrastructure development" to="/expertise" /></Reveal>
-          <Reveal delay={0.15} className="bg-white"><ServiceImageCard img="/assets/r-and-d.jpg" title="Project management" to="/services" /></Reveal>
-          <div className="blueprint bg-white p-6 md:p-8 flex flex-col min-w-0">
-            <p className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-soft"><span className="h-px w-8 bg-navy/30" /> Our approach</p>
-            <h2 className="mt-4 font-display text-[1.8rem] leading-[0.95] text-ink">Construction expertise backed by experience.</h2>
-            <p className="mt-4 font-mono text-[11px] leading-relaxed text-soft">
+      {/* ---------- SERVICES + APPROACH ---------- */}
+      <section className="w-full bg-[#edf0f4] p-2">
+        <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-[1fr_1fr_1fr_1fr_350px]">
+          <Reveal><ServiceImageCard img="/assets/img-slide-two.jpg" title="Sugar plant engineering" to="/expertise" /></Reveal>
+          <Reveal delay={0.05}><ServiceImageCard img="/assets/service-engg.jpg" title="Cogeneration & power" to="/services" /></Reveal>
+          <Reveal delay={0.1}><ServiceImageCard img="/assets/img-slide-three.jpg" title="Infrastructure development" to="/expertise" /></Reveal>
+          <Reveal delay={0.15}><ServiceImageCard img="/assets/r-and-d.jpg" title="Project management" to="/services" /></Reveal>
+          <div className="blueprint bg-white px-7 py-8 flex flex-col min-w-0">
+            <p className="flex items-center gap-4 font-mono text-[9.5px] uppercase tracking-[0.2em] text-soft"><span className="h-px w-10 bg-navy/30" /> Our approach</p>
+            <h2 className="mt-5 font-display font-semibold text-[26px] leading-[1.02] text-[#101418]">Construction expertise backed by experience.</h2>
+            <p className="mt-4 font-mono text-[10.5px] leading-[1.8] text-soft">
               J.P. Mukherji & Associates partners with developers, businesses and public organizations to deliver projects that meet the highest standards of quality, safety and performance.
             </p>
-            <Link to="/about" className="cut-sm mt-6 w-fit bg-brand px-6 py-2.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-white hover:bg-navy">Our approach →</Link>
+            <Link to="/about" className="cut-btn mt-7 w-fit bg-brand pl-6 pr-7 py-[11px] font-mono text-[10.5px] font-bold uppercase tracking-[0.12em] text-white hover:bg-navy">Our approach&nbsp;&nbsp;→</Link>
           </div>
         </div>
       </section>
 
-      {/* ---------- TRUST BAND: full-bleed ---------- */}
+      {/* ---------- CLIENTS ---------- */}
+      <section className="w-full bg-white border-y border-navy/10 py-9 md:py-11">
+        <p className="flex items-center justify-center gap-4 px-4 font-mono text-[9.5px] uppercase tracking-[0.24em] text-soft">
+          <span className="h-px w-10 bg-navy/30" /> Trusted by mills across India and 30+ countries <span className="h-px w-10 bg-navy/30" />
+        </p>
+        <h2 className="mt-3 px-4 text-center font-display font-semibold text-[clamp(1.5rem,2.6vw,2.3rem)] text-[#101418]">
+          Our <span className="text-brand">clients</span> & partners
+        </h2>
+        <div className="mt-8">
+          <ClientsWall />
+        </div>
+        <p className="mt-6 text-center font-mono text-[9px] uppercase tracking-[0.2em] text-soft/60">Hover to pause</p>
+      </section>
+
+      {/* ---------- TRUST BAND ---------- */}
       <section className="w-full">
-        <div className="grid w-full lg:grid-cols-[1fr_340px] bg-navydeep text-white">
+        <div className="grid w-full lg:grid-cols-[1fr_350px] bg-[#0a1f45] text-white">
           <div className="relative min-w-0">
-            <img src="/assets/about_carousel_bg.jpg" alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover opacity-25 img-industrial" />
+            <img src="/assets/about_carousel_bg.jpg" alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover opacity-20 img-industrial" />
             <div className="absolute inset-0 blueprint-dark" />
-            <div className="relative grid sm:grid-cols-2 xl:grid-cols-4">
+            <div className="relative grid h-full sm:grid-cols-2 xl:grid-cols-4">
               {[
                 { t: 'Sustainable development', icon: 'M12 21c-5 0-8-3-8-8 5 0 11-2 12-9 3 4 4 8 4 9 0 5-3 8-8 8zM7 12l3 3 7-7' },
-                { t: 'People first', icon: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75' },
-                { t: 'Safety always', icon: 'M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4zM9 12l2 2 4-4' },
-                { t: 'Long-term partnership', icon: 'M4 20V10h3v10M10 20V4h3v16M16 20v-7h3v7M2 20h20' },
+                { t: 'People first', icon: 'M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM2.5 20c0-3.5 3-5.5 6.5-5.5s6.5 2 6.5 5.5M16 4.5a3.5 3.5 0 0 1 0 6.8M17.5 14.7c2.4.7 4 2.3 4 5.3' },
+                { t: 'Safety always', icon: 'M12 2.5 4.5 6v6c0 4.8 3.2 8.2 7.5 9.5 4.3-1.3 7.5-4.7 7.5-9.5V6L12 2.5zM9 12l2.2 2.2L15.5 10' },
+                { t: 'Long-term partnership', icon: 'M3 21h18M5 21v-8M10 21V8M15 21v-5M20 21V6M5 13l5-3 4 2 6-4' },
               ].map((x) => (
-                <div key={x.t} className="flex items-center gap-4 border-b sm:border-b-0 sm:border-r border-white/10 px-6 py-6 last:border-0 min-w-0">
-                  <svg viewBox="0 0 24 24" className="h-7 w-7 shrink-0 text-white/80" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"><path d={x.icon} /></svg>
-                  <p className="font-mono text-[10.5px] uppercase leading-snug tracking-[0.16em] text-white/85">{x.t}</p>
+                <div key={x.t} className="flex items-center gap-4 px-7 py-6 border-b sm:border-b-0 sm:border-r border-white/10 last:border-0 min-w-0">
+                  <svg viewBox="0 0 24 24" className="h-[30px] w-[30px] shrink-0 text-white/85" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"><path d={x.icon} /></svg>
+                  <p className="font-mono text-[10px] uppercase leading-[1.7] tracking-[0.18em] text-white/85">{x.t}</p>
                 </div>
               ))}
             </div>
           </div>
-          <div className="blueprint-blue bg-brand p-6 md:p-8 flex items-center justify-between gap-4 min-w-0">
-            <p className="font-display text-2xl leading-[0.95] text-white">Let's build<br />what's next.</p>
-            <Link to="/contact" className="cut-sm shrink-0 border border-white/70 px-6 py-3 font-mono text-[10.5px] font-bold uppercase tracking-[0.14em] text-white hover:bg-white hover:text-navy">Enquire now →</Link>
+          <div className="blueprint-blue bg-brand px-8 py-7 flex items-center justify-between gap-5 min-w-0">
+            <p className="font-display font-semibold text-[24px] leading-[1.0] text-white">Let's build<br />what's next.</p>
+            <Link to="/contact" className="cut-btn shrink-0 border border-white/80 pl-6 pr-7 py-[13px] font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-white hover:bg-white hover:text-navy">Enquire now&nbsp;&nbsp;→</Link>
           </div>
         </div>
       </section>
 
       {/* slim brochure line */}
       <section className="w-full bg-white border-b border-navy/10 px-4 md:px-8 py-3.5 flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
-        <p className="font-mono text-[10.5px] uppercase tracking-[0.14em] text-soft">
+        <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-soft">
           {c.settings.heroVideo ? 'Company film available · ' : ''}Brochure leads go to Admin → Brochure leads with country + full phone.
         </p>
-        <button onClick={() => onBrochure()} className="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-brand hover:text-navy shrink-0">Download brochure →</button>
+        <button onClick={() => onBrochure()} className="font-mono text-[10.5px] font-bold uppercase tracking-[0.14em] text-brand hover:text-navy shrink-0">Download brochure →</button>
       </section>
     </div>
   )

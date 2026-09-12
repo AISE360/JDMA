@@ -48,7 +48,7 @@ export function Pill({
       : tone === 'light'
         ? 'bg-navy text-white hover:bg-brand'
         : 'border border-navy/30 text-navy hover:border-brand hover:text-brand'
-  const cls = `cut-sm inline-flex items-center justify-center px-7 py-3 font-mono text-[11px] font-bold uppercase tracking-[0.18em] transition-colors ${styles} ${className}`
+  const cls = `cut-btn inline-flex items-center justify-center px-7 py-3 font-mono text-[11px] font-bold uppercase tracking-[0.14em] transition-colors ${styles} ${className}`
   if (to) return <Link to={to} className={cls}>{children}</Link>
   return <button onClick={onClick} className={cls}>{children}</button>
 }

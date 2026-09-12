@@ -52,38 +52,38 @@ export default function Navbar({ onBrochure }: { onBrochure: OpenBrochure }) {
 
   return (
     <>
-      <header className={`sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-navy/10 will-change-transform transition-transform duration-300 ${hidden && !open ? '-translate-y-full' : 'translate-y-0'}`}>
-        <div className="w-full px-3 md:px-6 flex items-center justify-between gap-4 py-3">
-          <Link to="/" aria-label="JPMA home" className="flex items-center min-w-0 shrink-0">
-            <img src="/assets/jpma-logo-blue.png" alt="J.P. Mukherji & Associates" className="h-9 md:h-11 w-auto object-contain" />
+      <header className={`sticky top-0 z-40 bg-white border-b border-navy/10 will-change-transform transition-transform duration-300 ${hidden && !open ? '-translate-y-full' : 'translate-y-0'}`}>
+        <div className="w-full pl-3 pr-3 md:pl-6 md:pr-5 flex items-center gap-5 h-[68px]">
+          <Link to="/" aria-label="JPMA home" className="shrink-0">
+            <img src="/assets/jpma-logo-blue.png" alt="J.P. Mukherji & Associates" className="h-10 md:h-11 w-auto object-contain" />
           </Link>
 
-          <nav className="hidden xl:flex items-center gap-6">
+          <nav className="hidden xl:flex items-center gap-[26px] mx-auto">
             {MENU.map((m) => (
               <NavLink
                 key={m.label}
                 to={m.to}
-                className={`py-2 font-mono text-[11px] uppercase tracking-[0.12em] ${parentActive(m) ? 'text-ink font-bold' : 'text-ink/55 hover:text-ink'}`}
+                className={`py-2 font-mono text-[11px] uppercase tracking-[0.1em] whitespace-nowrap ${parentActive(m) ? 'text-ink font-bold' : 'text-ink/50 hover:text-ink'}`}
               >
-                <span className={`relative pb-1.5 ${parentActive(m) ? 'after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-full after:bg-brand' : ''}`}>
+                <span className={`relative pb-[7px] ${parentActive(m) ? 'after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-full after:bg-brand' : ''}`}>
                   {m.label}
                 </span>
               </NavLink>
             ))}
           </nav>
 
-          <div className="flex items-center gap-2 md:gap-3 shrink-0">
+          <div className="flex items-center gap-2.5 shrink-0 ml-auto xl:ml-0">
             <button onClick={() => setSearch(true)} aria-label="Search" className="hidden sm:flex h-9 w-9 items-center justify-center text-navy hover:text-brand">
               <svg viewBox="0 0 20 20" className="h-[17px] w-[17px]" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><circle cx="9" cy="9" r="6" /><path d="m13.5 13.5 4 4" /></svg>
             </button>
-            <button onClick={() => onBrochure()} className="cut-sm hidden md:inline-flex items-center gap-2 bg-brand px-6 py-2.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-white hover:bg-navy">
+            <button onClick={() => onBrochure()} className="cut-btn hidden md:inline-flex items-center gap-2 bg-brand pl-6 pr-7 py-[11px] font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-white hover:bg-navy">
               Brochure <span aria-hidden>→</span>
             </button>
-            <Link to="/contact" className="cut-sm hidden md:inline-flex items-center gap-2 border border-navy/40 px-6 py-2.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-navy hover:bg-navy hover:text-white">
+            <Link to="/contact" className="cut-btn hidden md:inline-flex items-center gap-2 border border-navy/50 pl-6 pr-7 py-[10px] font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-navy hover:bg-navy hover:text-white">
               Contact <span aria-hidden>→</span>
             </Link>
-            <span className="hidden 2xl:block text-right font-mono text-[9px] uppercase leading-tight tracking-[0.14em] text-ink/50">Est. 1972<br />Kolkata, India</span>
-            <button onClick={() => setOpen(true)} className="xl:hidden cut-sm inline-flex items-center gap-2 bg-navy px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-white">
+            <span className="hidden xl:block text-right font-mono text-[8.5px] uppercase leading-[1.7] tracking-[0.14em] text-ink/45 pl-2">Est. 1972<br />Kolkata, India</span>
+            <button onClick={() => setOpen(true)} className="xl:hidden cut-btn inline-flex items-center gap-2 bg-navy px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-white">
               Menu ≡
             </button>
           </div>
@@ -92,9 +92,9 @@ export default function Navbar({ onBrochure }: { onBrochure: OpenBrochure }) {
       <AnimatePresence>
         {open && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.22 }} className="fixed inset-0 z-[90] bg-navydeep blueprint-dark flex flex-col" role="dialog" aria-label="Site menu">
-            <div className="flex items-center justify-between px-4 md:px-8 py-4 border-b border-white/10 bg-white">
-              <img src="/assets/jpma-logo-blue.png" alt="J.P. Mukherji & Associates" className="h-9 w-auto object-contain" />
-              <button onClick={() => setOpen(false)} aria-label="Close menu" className="cut-sm bg-brand px-5 py-2 font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-white">Close ×</button>
+            <div className="w-full pl-3 pr-3 flex items-center justify-between h-[68px] bg-white border-b border-navy/10 shrink-0">
+              <img src="/assets/jpma-logo-blue.png" alt="J.P. Mukherji & Associates" className="h-10 w-auto object-contain" />
+              <button onClick={() => setOpen(false)} aria-label="Close menu" className="cut-btn inline-flex items-center gap-2 bg-navy px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-white">Close ×</button>
             </div>
             <nav className="flex-1 overflow-y-auto px-5 md:px-8 py-6">
               {MENU.map((m, mi) => (
@@ -106,8 +106,8 @@ export default function Navbar({ onBrochure }: { onBrochure: OpenBrochure }) {
               ))}
             </nav>
             <div className="px-5 md:px-8 pb-8 flex gap-3">
-              <button onClick={() => { setOpen(false); onBrochure() }} className="cut-sm flex-1 bg-brand px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-white">Brochure →</button>
-              <Link to="/contact" className="cut-sm flex-1 border border-white/30 px-6 py-3.5 text-center font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-white">Contact →</Link>
+              <button onClick={() => { setOpen(false); onBrochure() }} className="cut-btn flex-1 bg-brand px-6 py-3.5 font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-white">Brochure →</button>
+              <Link to="/contact" className="cut-btn flex-1 border border-white/30 px-6 py-3.5 text-center font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-white">Contact →</Link>
             </div>
           </motion.div>
         )}

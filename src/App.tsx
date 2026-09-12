@@ -77,7 +77,7 @@ function Shell() {
         <BrochureModal open={brochureOpen} onClose={() => setBrochureOpen(false)} file={brochureFile} />
       )}
       {!isAdmin && (
-        <Link to="/contact" className="cut-sm fixed z-40 right-4 md:right-5 bg-brand px-5 py-2.5 font-mono text-[10px] md:px-6 md:py-3 md:text-[10.5px] font-bold uppercase tracking-[0.18em] text-white shadow-xl hover:bg-brand-deep transition-colors max-w-[calc(100vw-2rem)]" style={{ bottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
+        <Link to="/contact" className="cut-btn fixed z-40 right-4 md:right-5 bg-brand px-5 py-2.5 font-mono text-[10px] md:px-6 md:py-3 md:text-[10.5px] font-bold uppercase tracking-[0.14em] text-white shadow-xl hover:bg-brand-deep transition-colors max-w-[calc(100vw-2rem)]" style={{ bottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
           Enquire now →
         </Link>
       )}

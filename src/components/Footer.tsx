@@ -15,11 +15,11 @@ export default function Footer() {
             <p className="mt-5 max-w-xs font-mono text-[11px] uppercase leading-relaxed tracking-[0.04em] text-white/60">
               {siteSettings.footerAbout || "India's first end-to-end sugar industry consultancy, concept to commissioning across 30+ countries since 1972."}
             </p>
-            <Link to="/contact" className="cut-sm mt-6 inline-flex bg-brand px-6 py-2.5 font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-white hover:bg-white hover:text-navy">Contact us →</Link>
+            <Link to="/contact" className="cut-btn mt-6 inline-flex bg-brand px-6 py-2.5 font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-white hover:bg-white hover:text-navy">Contact us →</Link>
           </div>
           <div>
             <p className="font-display text-2xl leading-[0.95]">Build with an industrialized and digital system</p>
-            <Link to="/about" className="cut-sm mt-4 inline-block border border-white/40 px-5 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.16em] hover:bg-white hover:text-navy">Learn more →</Link>
+            <Link to="/about" className="cut-btn mt-4 inline-block border border-white/40 px-5 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.14em] hover:bg-white hover:text-navy">Learn more →</Link>
             <p className="mt-6 font-mono text-[11px] uppercase leading-relaxed text-white/55">{siteSettings.address || 'Kolkata · India'}<br />{siteSettings.email1 || 'info@jpma.org.in'}<br />{siteSettings.phone1 || ''}</p>
           </div>
           <div className="font-mono text-[11px] uppercase tracking-[0.14em]">

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: "Anton", "Archivo", sans-serif;
+  --font-display: "Oswald", "Archivo", sans-serif;
   --font-sans: "Archivo", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Space Mono", ui-monospace, monospace;
   --color-paper: #ffffff;
@@ -49,9 +49,9 @@ body {
 .font-display {
   font-family: var(--font-display);
   text-transform: uppercase;
-  letter-spacing: 0.01em;
-  line-height: 0.92;
-  font-weight: 400;
+  letter-spacing: 0.005em;
+  line-height: 0.94;
+  font-weight: 600;
   text-wrap: balance;
 }
 
@@ -63,6 +63,8 @@ body {
 
 /* clipped corner buttons/cards like the reference */
 .cut { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 0); }
+/* buttons: single diagonal cut, bottom-right only */
+.cut-btn { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%); }
 .cut-sm { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 0); }
 .cut-lg { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0 100%, 0 0); }
 .cut-card { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 26px), calc(100% - 26px) 100%, 0 100%, 0 0); }
@@ -105,6 +107,9 @@ body {
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 .animate-marquee { animation: marquee 36s linear infinite; }
 .animate-marquee-slow { animation: marquee 60s linear infinite; }
+/* clients timeline: medium pace, stops on hover */
+.animate-clients { animation: marquee 70s linear infinite; }
+.clients-wall:hover .animate-clients { animation-play-state: paused; }
 .logo-wall:hover .animate-marquee-slow { animation-play-state: paused; }
 
 .img-soft { filter: grayscale(0.3) contrast(1.04); }
