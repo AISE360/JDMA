@@ -152,7 +152,7 @@ function LeadsTable({ table }: { table: 'brochure_leads' | 'enquiries' | 'job_ap
   return (
     <div className="rounded-[1.5rem] border border-ink/10 bg-white overflow-hidden">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-5 border-b border-ink/10">
-        <p className="text-[13px] text-soft">{loading ? 'Loading…' : `${filtered.length} record${filtered.length === 1 ? '' : 's'} · ${isSupabaseConfigured ? 'live from Supabase' : 'local queue'}`}</p>
+        <p className="text-[13px] text-soft">{loading ? 'Loading…' : `${filtered.length} record${filtered.length === 1 ? '' : 's'}`}</p>
         <div className="flex gap-2">
           <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search name, phone, email…" className="rounded-full border border-ink/15 px-4 py-2 text-[13px] outline-none w-60" />
           <button onClick={() => setRefresh((r) => r + 1)} className="rounded-full border border-ink/20 px-5 py-2 text-[12px] font-bold">Refresh</button>
@@ -302,8 +302,7 @@ function CollectionManager({ def }: { def: CollectionDef }) {
     <div>
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="text-[13px] text-soft">
-          {loading ? 'Loading…' : `${items.length} item${items.length === 1 ? '' : 's'}`} · live on the website as soon as you save ·{' '}
-          <span className={`font-bold ${remote ? 'text-green-700' : 'text-soft'}`}>{remote ? 'Supabase live database' : 'Local browser storage'}</span>
+          {loading ? 'Loading…' : `${items.length} item${items.length === 1 ? '' : 's'}`} · live on the website as soon as you save
         </p>
         <div className="flex gap-2">
           <button onClick={doReset} className="rounded-full border border-ink/20 px-5 py-2 text-[12px] font-bold">Reset</button>
@@ -403,7 +402,6 @@ function SettingsEditor() {
   if (loading) return <p className="text-sm text-soft">Loading settings…</p>
   return (
     <div className="max-w-3xl">
-      <p className="mb-4 text-[13px] text-soft">Editing: <span className={`font-bold ${remote ? 'text-green-700' : 'text-soft'}`}>{remote ? 'Supabase live database' : 'Local browser storage'}</span></p>
       <div className="rounded-[1.5rem] border border-ink/10 bg-white p-6 space-y-4">
         {SETTINGS_FIELDS.map((f) => (
           <div key={f.key}>
@@ -456,7 +454,6 @@ function Dashboard({ go }: { go: (s: Section) => void }) {
       {!isSupabaseConfigured && (
         <p className="rounded-2xl bg-mist p-5 text-[13px] text-soft leading-relaxed">
           <strong className="text-ink">Local mode:</strong> edits save in this browser and show on the site instantly.
-          Connect Supabase (see SUPABASE_SETUP.md) for shared team data + staff logins.
         </p>
       )}
     </div>
@@ -561,12 +558,8 @@ export default function Admin() {
     <div className="min-h-screen bg-paper text-ink flex">
       {/* sidebar */}
       <aside className="hidden md:flex w-64 shrink-0 flex-col bg-brand-deep text-white p-5">
-        <Link to="/" className="flex items-center gap-2.5 pb-5 border-b border-white/10">
-          <img src="/assets/jpma-logo-blue.png" alt="JPMA" className="h-8 w-auto bg-white rounded px-1.5 py-0.5" />
-          <span className="leading-tight">
-            <span className="block text-[12.5px] font-bold">JPMA Admin</span>
-            <span className="block text-[9.5px] uppercase tracking-[0.24em] text-white/50">{isSupabaseConfigured ? 'Supabase live' : 'Local mode'}</span>
-          </span>
+        <Link to="/" className="flex items-center justify-center gap-2.5 pb-5 border-b border-white/10" aria-label="JPMA admin home">
+          <img src="/assets/jpma-logo-blue.png" alt="JPMA" className="h-9 w-auto bg-white rounded-lg px-2 py-1" />
         </Link>
         <nav className="mt-5 space-y-5 overflow-y-auto">
           <div>
