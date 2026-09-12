@@ -7,7 +7,7 @@ import { motion } from 'framer-motion'
  * ever animates half-loaded. If any part is missing, falls back to full logo.
  */
 
-const PARTS = ['/assets/logo-jp.png', '/assets/jp-mukherji.png', '/assets/associates.png', '/assets/pvt-ltd.png']
+const PARTS = ['/assets/logo-jp.jpg', '/assets/jp-mukherji.jpg', '/assets/associates.jpg', '/assets/pvt-ltd.jpg']
 const OFF = typeof window !== 'undefined' ? -(window.innerHeight + 240) : -1400
 
 function drop(delay: number, dur: number, dist: number, go: boolean) {
