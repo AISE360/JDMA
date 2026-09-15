@@ -126,7 +126,9 @@ section, header, footer, main { min-width: 0; }
 [class*="grid-cols"] > * { min-width: 0; }
 /* keep clipped corners from creating sub-pixel horizontal scroll on small screens */
 .cut, .cut-btn, .cut-sm, .cut-lg, .cut-card { max-width: 100%; }
-/* fluid media never forces overflow */
-img, video, svg, canvas { max-width: 100%; }
-img { height: auto; }
-section .absolute.inset-0.h-full img, section .absolute.inset-0 img { height: 100%; }
+/* fluid media never forces overflow — in base layer so Tailwind height and max-width utilities can still override */
+@layer base {
+  img, video, svg, canvas { max-width: 100%; }
+  img { height: auto; }
+  section .absolute.inset-0.h-full img, section .absolute.inset-0 img { height: 100%; }
+}

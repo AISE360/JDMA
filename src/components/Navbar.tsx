@@ -53,9 +53,9 @@ export default function Navbar({ onBrochure }: { onBrochure: OpenBrochure }) {
   return (
     <>
       <header className={`sticky top-0 z-40 bg-white border-b border-navy/10 will-change-transform transition-transform duration-300 ${hidden && !open ? '-translate-y-full' : 'translate-y-0'}`}>
-        <div className="w-full pl-3 pr-3 md:pl-6 md:pr-5 flex items-center gap-3 md:gap-5 h-[60px] md:h-[68px] min-w-0">
-          <Link to="/" aria-label="JPMA home" className="shrink-0 min-w-0">
-            <img src="/assets/jpma-logo-blue.png" alt="J.P. Mukherji & Associates" className="h-7 sm:h-8 md:h-9 w-auto max-w-[170px] sm:max-w-[220px] md:max-w-[300px] object-contain" />
+        <div className="w-full pl-3 pr-3 md:pl-6 md:pr-5 flex items-center gap-2 sm:gap-3 md:gap-5 h-[56px] md:h-[68px] min-w-0">
+          <Link to="/" aria-label="JPMA home" className="min-w-0 flex-1 sm:flex-none sm:shrink-0 flex items-center">
+            <img src="/assets/jpma-logo-blue.png" alt="J.P. Mukherji & Associates" className="h-[22px] sm:h-8 md:h-9 w-auto max-w-[42vw] sm:max-w-[220px] md:max-w-[300px] object-contain object-left" />
           </Link>
 
           <nav className="hidden xl:flex items-center gap-[26px] mx-auto">
@@ -92,8 +92,8 @@ export default function Navbar({ onBrochure }: { onBrochure: OpenBrochure }) {
       <AnimatePresence>
         {open && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.22 }} className="fixed inset-0 z-[90] bg-navydeep blueprint-dark flex flex-col" role="dialog" aria-label="Site menu">
-            <div className="w-full pl-3 pr-3 flex items-center justify-between gap-3 h-[60px] bg-white border-b border-navy/10 shrink-0 min-w-0">
-              <img src="/assets/jpma-logo-blue.png" alt="J.P. Mukherji & Associates" className="h-7 w-auto max-w-[170px] object-contain min-w-0" />
+            <div className="w-full pl-3 pr-3 flex items-center justify-between gap-2 h-[56px] bg-white border-b border-navy/10 shrink-0 min-w-0">
+              <img src="/assets/jpma-logo-blue.png" alt="J.P. Mukherji & Associates" className="h-[22px] w-auto max-w-[42vw] object-contain object-left min-w-0" />
               <button onClick={() => setOpen(false)} aria-label="Close menu" className="cut-btn inline-flex shrink-0 items-center gap-2 bg-navy px-3.5 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-white">Close ×</button>
             </div>
             <nav className="flex-1 overflow-y-auto px-5 md:px-8 py-6">
