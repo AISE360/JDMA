@@ -79,20 +79,20 @@ export default function Home({ onBrochure }: { onBrochure: OpenBrochure }) {
       <section className="w-full overflow-hidden">
         <div className="grid w-full grid-cols-1 lg:grid-cols-[minmax(0,30%)_minmax(0,1fr)_minmax(0,26%)] xl:grid-cols-[minmax(0,27%)_minmax(0,1fr)_minmax(0,21%)] lg:min-h-[560px] xl:min-h-[600px] 2xl:min-h-[640px] border-b border-navy/10">
           {/* left copy */}
-          <div className="blueprint relative px-5 sm:px-6 md:px-8 xl:px-10 pt-7 md:pt-9 pb-6 md:pb-7 flex flex-col bg-white min-w-0 overflow-hidden">
-            <p className="flex min-w-0 items-center gap-3 font-mono text-[10px] sm:text-[11px] md:text-[11px] uppercase tracking-[0.14em] sm:tracking-[0.18em] md:tracking-[0.2em] text-soft">
-              <span className="h-px w-6 sm:w-8 md:w-10 shrink-0 bg-navy/25" />
-              <span className="min-w-0 whitespace-nowrap">Engineering&nbsp;&nbsp;&nbsp;People&nbsp;&nbsp;&nbsp;Progress</span>
-              <span className="h-px w-6 flex-1 bg-navy/10" />
+          <div className="blueprint relative px-5 sm:px-6 md:px-8 lg:px-6 xl:px-8 2xl:px-10 pt-7 md:pt-9 pb-6 md:pb-7 flex flex-col bg-white min-w-0 overflow-hidden">
+            <p className="flex min-w-0 items-center gap-2.5 font-mono text-[9px] tracking-[0.12em] sm:text-[10px] sm:tracking-[0.14em] md:text-[11px] md:tracking-[0.16em] lg:text-[9px] lg:tracking-[0.1em] xl:text-[10px] xl:tracking-[0.14em] 2xl:text-[11px] 2xl:tracking-[0.18em] uppercase text-soft">
+              <span className="h-px w-6 lg:w-8 shrink-0 bg-navy/25" />
+              <span className="min-w-0 whitespace-nowrap">Engineering&nbsp;&nbsp;People&nbsp;&nbsp;Progress</span>
+              <span className="hidden min-[1400px]:block h-px flex-1 bg-navy/10" />
             </p>
-            <h1 className="mt-5 md:mt-7 font-display font-semibold text-[1.6rem] min-[400px]:text-[1.85rem] sm:text-[2.4rem] lg:text-[clamp(2.2rem,1.35rem+2.6vw,4.3rem)] leading-[1.04] break-words">
+            <h1 className="mt-5 md:mt-7 font-display font-semibold text-[1.6rem] min-[400px]:text-[1.85rem] sm:text-[2.4rem] lg:text-[clamp(1.9rem,1rem+2vw,3.8rem)] leading-[1.04] break-words">
               <span className="block text-[#101418]">Building with precision.</span>
               <span className="block text-brand">Delivering with confidence.</span>
             </h1>
             <p className="mt-5 max-w-[44ch] font-sans text-[14.5px] leading-[1.7] text-soft">
               From sugar plants to large-scale cogeneration, J.P. Mukherji & Associates brings expertise, accountability and execution to every project.
             </p>
-            <div className="mt-6 md:mt-8 grid grid-cols-1 min-[420px]:flex min-[420px]:flex-wrap gap-2.5 min-[420px]:gap-3">
+            <div className="mt-6 md:mt-8 flex flex-col min-[420px]:flex-row min-[420px]:flex-wrap lg:flex-col lg:items-stretch min-[1700px]:flex-row gap-2.5 min-[420px]:gap-3">
               <button onClick={() => onBrochure()} className="cut-btn bg-brand px-6 py-[13px] text-center font-mono text-[12px] font-bold uppercase tracking-[0.12em] text-white hover:bg-navy min-[420px]:pl-7 min-[420px]:pr-8">
                 Our brochure&nbsp;&nbsp;→
               </button>
