@@ -34,10 +34,20 @@ export default function Contact() {
         <Reveal>
           <Kicker>Head office</Kicker>
           <h2 className="font-display mt-3 text-3xl">Jyoti House, Pune.</h2>
-          <ul className="mt-5 space-y-2 text-[14px] text-soft">
-            <li>{s.address}</li>
-            <li>{s.phone1} · {s.phone2}</li>
-            <li>{s.email1} · {s.email2}</li>
+          <ul className="mt-5 space-y-2 text-[14.5px] leading-relaxed text-soft">
+            <li>
+              <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.address || 'Dahanukar Colony, Kothrud, Pune')}`} target="_blank" rel="noreferrer" className="underline decoration-navy/25 underline-offset-4 hover:text-navy">{s.address}</a>
+            </li>
+            <li>
+              {s.phone1 ? <a href={`tel:${String(s.phone1).replace(/[^+\d]/g, '')}`} className="underline decoration-navy/25 underline-offset-4 hover:text-navy">{s.phone1}</a> : null}
+              {s.phone1 && s.phone2 ? ' · ' : null}
+              {s.phone2 ? <a href={`tel:${String(s.phone2).replace(/[^+\d]/g, '')}`} className="underline decoration-navy/25 underline-offset-4 hover:text-navy">{s.phone2}</a> : null}
+            </li>
+            <li>
+              {s.email1 ? <a href={`mailto:${s.email1}`} className="underline decoration-navy/25 underline-offset-4 hover:text-navy">{s.email1}</a> : null}
+              {s.email1 && s.email2 ? ' · ' : null}
+              {s.email2 ? <a href={`mailto:${s.email2}`} className="underline decoration-navy/25 underline-offset-4 hover:text-navy">{s.email2}</a> : null}
+            </li>
             <li>Fax {s.fax}</li>
           </ul>
           <div className="mt-6 overflow-hidden rounded-[1.5rem] border border-ink/10">

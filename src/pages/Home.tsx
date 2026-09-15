@@ -1,9 +1,17 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useContent } from '../hooks/useContent'
 import { Reveal } from '../components/ui'
 import type { OpenBrochure } from '../components/BrochureModal'
 
-const HERO_IMG = '/assets/slider-one.jpg'
+const HERO_IMGS = [
+  '/assets/slider-one.jpg',
+  '/assets/slider-two.jpg',
+  '/assets/slider-three.jpg',
+  '/assets/slider-five.jpg',
+  '/assets/slider-six.jpg',
+]
+const HERO_INTERVAL_MS = 10000
 
 const CLIENT_LOGOS = Array.from({ length: 39 }, (_, i) => `/assets/clients/${i + 1}.png`)
 const CLIENT_LOGOS_2 = Array.from({ length: 59 }, (_, i) => i + 1)
@@ -57,6 +65,13 @@ function ServiceImageCard({ img, title, to }: { img: string; title: string; to: 
 
 export default function Home({ onBrochure }: { onBrochure: OpenBrochure }) {
   const c = useContent()
+  const [heroIdx, setHeroIdx] = useState(0)
+
+  useEffect(() => {
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return
+    const t = window.setInterval(() => setHeroIdx((i) => (i + 1) % HERO_IMGS.length), HERO_INTERVAL_MS)
+    return () => window.clearInterval(t)
+  }, [])
 
   return (
     <div className="w-full bg-white text-ink overflow-x-clip">
@@ -65,35 +80,44 @@ export default function Home({ onBrochure }: { onBrochure: OpenBrochure }) {
         <div className="grid w-full grid-cols-1 lg:grid-cols-[minmax(0,30%)_minmax(0,1fr)_minmax(0,26%)] xl:grid-cols-[minmax(0,27%)_minmax(0,1fr)_minmax(0,21%)] lg:min-h-[560px] xl:min-h-[600px] 2xl:min-h-[640px] border-b border-navy/10">
           {/* left copy */}
           <div className="blueprint relative px-5 sm:px-6 md:px-8 xl:px-10 pt-7 md:pt-9 pb-6 md:pb-7 flex flex-col bg-white min-w-0 overflow-hidden">
-            <p className="flex min-w-0 items-center gap-3 font-mono text-[8px] sm:text-[9px] md:text-[9.5px] uppercase tracking-[0.14em] sm:tracking-[0.2em] md:tracking-[0.24em] text-soft">
+            <p className="flex min-w-0 items-center gap-3 font-mono text-[10px] sm:text-[11px] md:text-[11px] uppercase tracking-[0.14em] sm:tracking-[0.18em] md:tracking-[0.2em] text-soft">
               <span className="h-px w-6 sm:w-8 md:w-10 shrink-0 bg-navy/25" />
               <span className="min-w-0 whitespace-nowrap">Engineering&nbsp;&nbsp;&nbsp;People&nbsp;&nbsp;&nbsp;Progress</span>
               <span className="h-px w-6 flex-1 bg-navy/10" />
             </p>
-            <h1 className="mt-5 md:mt-7 font-display font-semibold text-[1.85rem] sm:text-[2.4rem] lg:text-[clamp(2.2rem,1.35rem+2.6vw,4.3rem)] leading-[1.02] break-words">
+            <h1 className="mt-5 md:mt-7 font-display font-semibold text-[1.6rem] min-[400px]:text-[1.85rem] sm:text-[2.4rem] lg:text-[clamp(2.2rem,1.35rem+2.6vw,4.3rem)] leading-[1.04] break-words">
               <span className="block text-[#101418]">Building with precision.</span>
               <span className="block text-brand">Delivering with confidence.</span>
             </h1>
-            <p className="mt-5 max-w-[44ch] font-mono text-[11px] leading-[1.75] text-soft">
+            <p className="mt-5 max-w-[44ch] font-sans text-[14.5px] leading-[1.7] text-soft">
               From sugar plants to large-scale cogeneration, J.P. Mukherji & Associates brings expertise, accountability and execution to every project.
             </p>
             <div className="mt-6 md:mt-8 grid grid-cols-1 min-[420px]:flex min-[420px]:flex-wrap gap-2.5 min-[420px]:gap-3">
-              <button onClick={() => onBrochure()} className="cut-btn bg-brand px-6 py-[13px] text-center font-mono text-[10.5px] font-bold uppercase tracking-[0.12em] text-white hover:bg-navy min-[420px]:pl-7 min-[420px]:pr-8">
+              <button onClick={() => onBrochure()} className="cut-btn bg-brand px-6 py-[13px] text-center font-mono text-[12px] font-bold uppercase tracking-[0.12em] text-white hover:bg-navy min-[420px]:pl-7 min-[420px]:pr-8">
                 Our brochure&nbsp;&nbsp;→
               </button>
-              <Link to="/contact" className="cut-btn border border-navy/45 px-6 py-[12px] text-center font-mono text-[10.5px] font-bold uppercase tracking-[0.12em] text-navy hover:bg-navy hover:text-white min-[420px]:pl-7 min-[420px]:pr-8">
+              <Link to="/contact" className="cut-btn border border-navy/45 px-6 py-[12px] text-center font-mono text-[12px] font-bold uppercase tracking-[0.12em] text-navy hover:bg-navy hover:text-white min-[420px]:pl-7 min-[420px]:pr-8">
                 Contact us&nbsp;&nbsp;→
               </Link>
             </div>
-            <p className="mt-auto pt-8 md:pt-10 flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[9.5px] uppercase tracking-[0.2em] text-soft">
+            <p className="mt-auto pt-8 md:pt-10 flex min-w-0 flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[11px] uppercase tracking-[0.16em] text-soft">
               <span className="h-px w-10 shrink-0 bg-navy/40" />
               <span className="min-w-0">People <span className="text-brand font-bold">|</span> Process <span className="text-brand font-bold">|</span> <span className="text-navy font-bold">Performance</span></span>
             </p>
           </div>
 
-          {/* center image */}
+          {/* center image — auto-rotates every 10s with crossfade */}
           <div className="relative min-h-[240px] sm:min-h-[340px] lg:min-h-[560px] xl:min-h-[600px] min-w-0 overflow-hidden border-y lg:border-y-0 border-navy/10">
-            <img src={HERO_IMG} alt="Sugar and cogeneration plant" className="absolute inset-0 h-full w-full object-cover" />
+            {HERO_IMGS.map((src, i) => (
+              <img
+                key={src}
+                src={src}
+                alt={i === 0 ? 'Sugar and cogeneration plant' : ''}
+                aria-hidden={i !== heroIdx}
+                loading={i === 0 ? 'eager' : 'lazy'}
+                className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1200ms] ease-in-out ${i === heroIdx ? 'opacity-100' : 'opacity-0'}`}
+              />
+            ))}
             <div className="absolute inset-0 blueprint" />
             {/* crosshair survey mark */}
             <span className="absolute font-mono text-[22px] font-light text-[#0e2a5e] hidden sm:block" style={{ left: '30%', top: '21%' }}>+</span>
@@ -104,23 +128,36 @@ export default function Home({ onBrochure }: { onBrochure: OpenBrochure }) {
               <polygon points="100,0 55,100 100,100" fill="#123a7d" opacity="0.94" />
               <line x1="100" y1="0" x2="55" y2="100" stroke="rgba(255,255,255,0.4)" strokeWidth="0.25" />
             </svg>
+            {/* slideshow dots — click to jump to a slide */}
+            <div className="absolute bottom-4 left-4 z-10 flex items-center gap-1.5" role="tablist" aria-label="Hero slides">
+              {HERO_IMGS.map((src, i) => (
+                <button
+                  key={src}
+                  role="tab"
+                  aria-selected={i === heroIdx}
+                  aria-label={`Show slide ${i + 1}`}
+                  onClick={() => setHeroIdx(i)}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${i === heroIdx ? 'w-6 bg-white' : 'w-1.5 bg-white/50 hover:bg-white/80'}`}
+                />
+              ))}
+            </div>
           </div>
 
           {/* right operating panel */}
           <div className="blueprint-blue relative bg-[#123a7d] px-6 md:px-8 pt-7 md:pt-8 pb-7 text-white flex flex-col min-w-0 overflow-hidden">
-            <p className="font-mono text-[9.5px] uppercase tracking-[0.24em] text-white/70">Operating system</p>
-            <p className="mt-5 font-mono text-[11px] leading-[1.8] text-white/85">
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/85">Operating system</p>
+            <p className="mt-5 font-sans text-[14px] leading-[1.75] text-white/95">
               Every project runs on one operating system — shared schedules, shared accountability, shared standards. So clients build, authorities stay informed and works all stay at the same level of precision.
             </p>
             <div className="my-7 h-px w-10 bg-white/35" />
-            <p className="font-mono text-[11px] uppercase leading-[2.1] tracking-[0.22em] text-white/85">
+            <p className="font-mono text-[13px] font-bold uppercase leading-[2.1] tracking-[0.16em] text-white">
               Plan<br />Engineer<br />Execute<br />Sustain
             </p>
             <div className="mt-auto pt-8">
               <svg className="ml-auto block w-[130px]" viewBox="0 0 130 22" fill="none">
                 <polyline points="0,21 88,21 108,1" stroke="rgba(255,255,255,0.45)" strokeWidth="1" />
               </svg>
-              <p className="mt-2 text-right font-mono text-[10.5px] uppercase leading-[1.8] tracking-[0.22em] text-white/85">
+              <p className="mt-2 text-right font-mono text-[12px] uppercase leading-[1.8] tracking-[0.16em] text-white">
                 We build<br />a stronger<br />tomorrow
               </p>
             </div>

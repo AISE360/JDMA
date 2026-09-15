@@ -55,17 +55,17 @@ export default function Navbar({ onBrochure }: { onBrochure: OpenBrochure }) {
       <header className={`sticky top-0 z-40 bg-white border-b border-navy/10 will-change-transform transition-transform duration-300 ${hidden && !open ? '-translate-y-full' : 'translate-y-0'}`}>
         <div className="w-full pl-3 pr-3 md:pl-6 md:pr-5 flex items-center gap-2 sm:gap-3 md:gap-5 h-[56px] md:h-[68px] min-w-0">
           <Link to="/" aria-label="JPMA home" className="min-w-0 flex-1 sm:flex-none sm:shrink-0 flex items-center">
-            <img src="/assets/jpma-logo-blue.png" alt="J.P. Mukherji & Associates" className="h-[22px] sm:h-8 md:h-9 w-auto max-w-[42vw] sm:max-w-[220px] md:max-w-[300px] object-contain object-left" />
+            <img src="/assets/jpma-logo-blue.png" alt="J.P. Mukherji & Associates" className="h-[22px] sm:h-8 md:h-10 w-auto max-w-[42vw] sm:max-w-[220px] md:max-w-[320px] object-contain object-left" />
           </Link>
 
-          <nav className="hidden xl:flex items-center gap-[26px] mx-auto">
+          <nav className="hidden xl:flex items-center gap-[22px] mx-auto">
             {MENU.map((m) => (
               <NavLink
                 key={m.label}
                 to={m.to}
-                className={`py-2 font-mono text-[11px] uppercase tracking-[0.1em] whitespace-nowrap ${parentActive(m) ? 'text-ink font-bold' : 'text-ink/50 hover:text-ink'}`}
+                className={`py-2 font-mono text-[13px] uppercase tracking-[0.06em] whitespace-nowrap ${parentActive(m) ? 'text-navy font-bold' : 'text-ink/80 hover:text-navy'}`}
               >
-                <span className={`relative pb-[7px] ${parentActive(m) ? 'after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-full after:bg-brand' : ''}`}>
+                <span className={`relative pb-[7px] ${parentActive(m) ? 'after:absolute after:left-0 after:bottom-0 after:h-[3px] after:w-full after:bg-brand' : ''}`}>
                   {m.label}
                 </span>
               </NavLink>
@@ -82,7 +82,7 @@ export default function Navbar({ onBrochure }: { onBrochure: OpenBrochure }) {
             <Link to="/contact" className="cut-btn hidden md:inline-flex items-center gap-2 border border-navy/50 pl-6 pr-7 py-[10px] font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-navy hover:bg-navy hover:text-white">
               Contact <span aria-hidden>→</span>
             </Link>
-            <span className="hidden xl:block text-right font-mono text-[8.5px] uppercase leading-[1.7] tracking-[0.14em] text-ink/45 pl-2">Est. 1972<br />Kolkata, India</span>
+            <span className="hidden xl:block text-right font-mono text-[10px] uppercase leading-[1.7] tracking-[0.12em] text-ink/60 pl-2">Est. 1972<br />Kolkata, India</span>
             <button onClick={() => setOpen(true)} className="xl:hidden cut-btn inline-flex shrink-0 items-center gap-2 bg-navy px-3.5 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-white">
               Menu ≡
             </button>
